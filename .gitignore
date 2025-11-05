@@ -38,3 +38,10 @@ out/
 
 ### Environment ###
 .env
+
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+test-output/
+reports/
