@@ -14,8 +14,8 @@ public class AutoCadServiceImpl implements AutoCadService{
         this.autoFactory = autoFactory;
     }
 
-    public Polyline AutoStarts(AutoParser autoParser, String filePath) {
-        List<Line> lines = autoParser.parser(filePath);
+    public Polyline autoStarts(AutoParser autoParser, String filePath) {
+        List<Line> lines = autoParser.lineParser(filePath);
         return autoFactory.createPolyline(lines);
     }
 }

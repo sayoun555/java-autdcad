@@ -13,6 +13,5 @@ public class Point {
         double dx = other.x - this.x;
         double dy = other.y - this.y;
         return Math.sqrt(dx * dx + dy);
-
     }
 }
