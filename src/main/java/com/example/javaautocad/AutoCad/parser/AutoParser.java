@@ -2,47 +2,38 @@ package com.example.javaautocad.AutoCad.parser;
 
 import com.example.javaautocad.AutoCad.domain.Line;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.javaautocad.AutoCad.domain.Point;
-import org.kabeja.dxf.DXFDocument;
-import org.kabeja.dxf.DXFEntity;
-import org.kabeja.dxf.DXFLine;
-import org.kabeja.parser.DXFParser;
-import org.kabeja.parser.SAXParserBuilder;
-
-import javax.swing.text.html.parser.DocumentParser;
-import javax.swing.text.html.parser.Parser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AutoParser {
-    private final String LINE = "LINE";
+    private final String START = "start";
+    private final String END = "end";
 
     public List<Line> lineParser(String file) {
-        return new ArrayList<>();
-    }
-
-    public DXFDocument dxfParser(String file) {
         try {
-            DXFParser parser = new DXFParser();
-            parser.parse(file, "UTF-8");
-            return parser.getDocument();
-        } catch (org.kabeja.parser.ParseException e) {
-            throw new IllegalArgumentException("DXF 파싱 실패: " + file, e);
-        }
-    }
-
-    public List<Line> docsParser(String file, String name) {
-        DXFDocument dxfDocument = dxfParser(file);
-        List<Line> lines = new ArrayList<>();
-        List<DXFEntity> dxfEntities = dxfDocument.getDXFLayer(name).getDXFEntities(LINE);
-        for (int i = 0; i < dxfEntities.size(); i++) {
-            DXFLine dxfLine = (DXFLine) dxfEntities.get(i);
-            Point pointStart = new Point(dxfLine.getStartPoint().getX(), dxfLine.getStartPoint().getY());
-            Point pointEnd = new Point(dxfLine.getEndPoint().getX(), dxfLine.getEndPoint().getY());
-            Line line = new Line(pointStart, pointEnd);
-            lines.add(line);
-        }
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Line> lines = new ArrayList<>();
+            JsonNode jsonNode = objectMapper.readTree(new File(file));
+            for (int i = 0; i < jsonNode.size(); i++) {
+                JsonNode node = jsonNode.get(i);
+                if (!"LINE".equals(node.get("type").asText())) {
+                    continue;
+                }
+                JsonNode start = node.get(START);
+                JsonNode end = node.get(END);
+                Point pointx = new Point(start.get(0).asDouble(), start.get(1).asDouble());
+                Point pointy = new Point(end.get(0).asDouble(), end.get(1).asDouble());
+                lines.add(new Line(pointx, pointy));
+            }
             return lines;
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
+        }
+
     }
 }
