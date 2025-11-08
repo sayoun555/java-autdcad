@@ -3,7 +3,6 @@ package com.example.javaautocad;
 import com.example.javaautocad.AutoCad.domain.Polyline;
 import com.example.javaautocad.AutoCad.factory.AutoFactory;
 import com.example.javaautocad.AutoCad.parser.AutoParser;
-import com.example.javaautocad.AutoCad.service.AutoCadServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
