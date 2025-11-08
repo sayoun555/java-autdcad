@@ -12,9 +12,12 @@ public class AutoMeasureServiceImpl implements AutoMeasureService {
     }
 
     public AutoDto autoSummary(Polyline polyline) {
-         = polyline.getLines();
-        return new AutoDto();
+        double total = polyline.resultLine();
+        double avg = polyline.averageLine();
+        double max = polyline.maxLine();
+        double min = polyline.minLine();
 
+        return new AutoDto(total, avg, max, min);
     }
 
 }
