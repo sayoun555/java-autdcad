@@ -28,5 +28,50 @@ public class FrontRearTire {
             tireDivision(median, line);
         }
     }
+
+    private int countFrontLine() {
+        return frontLine.size();
+    }
+
+    private int countRearLine() {
+        return rearLine.size();
+    }
+
+    private double frontAverage() {
+        if (frontLine.isEmpty()) {
+            return 0.0;
+        }
+        double total = 0.0;
+        for (int i = 0; i < countFrontLine(); i++) {
+            total += frontLine.get(i).abLine();
+        }
+        return total / countFrontLine();
+    }
+
+    private double rearAverage() {
+        if (rearLine.isEmpty()) {
+            return 0.0;
+        }
+        double total = 0.0;
+        for (int i = 0; i < countRearLine(); i++) {
+            total += rearLine.get(i).abLine();
+        }
+        return total / countRearLine();
+    }
+
+    public double frontRearRatio() {
+        if (frontLine.isEmpty() || rearLine.isEmpty()) {
+            return 0.0;
+        }
+        double front = frontAverage();
+        double rear = rearAverage();
+        return front / rear;
+    }
+
+    public double frontRearDeviation() {
+        double front = frontAverage();
+        double rear = rearAverage();
+        return Math.abs(front - rear);
+    }
 }
 
