@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AutoParser {
     private final String START = "start";
     private final String END = "end";
+    private final String LINE = "LINE";
+    private final String TYPE = "type";
 
     public List<Line> lineParser(String file) {
         try {
@@ -21,7 +23,7 @@ public class AutoParser {
             JsonNode jsonNode = objectMapper.readTree(new File(file));
             for (int i = 0; i < jsonNode.size(); i++) {
                 JsonNode node = jsonNode.get(i);
-                if (!"LINE".equals(node.get("type").asText())) {
+                if (!LINE.equals(node.get(TYPE).asText())) {
                     continue;
                 }
                 JsonNode start = node.get(START);

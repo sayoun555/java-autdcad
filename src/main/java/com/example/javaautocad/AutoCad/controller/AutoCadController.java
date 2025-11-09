@@ -1,9 +1,12 @@
 package com.example.javaautocad.AutoCad.controller;
 
-public class AutoCadController {
-    private final AutoCadService autoCadService;
+import com.example.javaautocad.AutoCad.manager.AutoManager;
 
-    public AutoCadController(AutoCadService autoCadService) {
-        this.autoCadService = autoCadService;
+public class AutoCadController {
+    private final AutoManager autoManager;
+
+    public AutoCadController(AutoManager autoManager) {
+        this.autoManager = autoManager;
     }
+
 }
