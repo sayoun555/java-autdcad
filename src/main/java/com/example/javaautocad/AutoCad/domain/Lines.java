@@ -51,6 +51,10 @@ public class Lines {
         return 1 - (lineStdDeviation() / lineAverage());
     }
 
+    public double lineDelivery() {
+
+    }
+
     public List<Line> getLineList() {
         return lineList;
     }

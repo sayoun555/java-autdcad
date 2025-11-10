@@ -2,7 +2,7 @@ package com.example.javaautocad.AutoCad.manager;
 
 import com.example.javaautocad.AutoCad.domain.Line;
 import com.example.javaautocad.AutoCad.domain.Polyline;
-import com.example.javaautocad.AutoCad.dto.AutoDto;
+import com.example.javaautocad.AutoCad.dto.LineDto;
 import com.example.javaautocad.AutoCad.factory.AutoFactory;
 import com.example.javaautocad.AutoCad.parser.AutoParser;
 import com.example.javaautocad.AutoCad.service.AutoMeasureService;
@@ -20,7 +20,7 @@ public class AutoManager {
         this.autoMeasureService = autoMeasureService;
     }
 
-    public AutoDto processBuild(String file) {
+    public LineDto processBuild(String file) {
         List<Line> lines = autoParser.lineParser(file);
         Polyline polyline = autoFactory.createPolyline(lines);
         return autoMeasureService.autoSummary(polyline);
