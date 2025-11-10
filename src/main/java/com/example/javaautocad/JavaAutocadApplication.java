@@ -9,21 +9,8 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JavaAutocadApplication implements CommandLineRunner {
+public class JavaAutocadApplication{
 
-    @Override
-    public void run(String... args) {
-        AutoParser parser = new AutoParser();
-        AutoFactory factory = new AutoFactory();
-        AutoCadServiceImpl service = new AutoCadServiceImpl(factory);
 
-        Polyline polyline = service.autoStarts(parser, "/Users/sanghyunyoun/springtest/testfile.dxf");
-        System.out.println("총 선분 개수: " + polyline.getLines().size());
-    }
-    public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(JavaAutocadApplication.class);
-        app.setWebApplicationType(WebApplicationType.NONE);
-        app.run(args);
-    }
 }
 
