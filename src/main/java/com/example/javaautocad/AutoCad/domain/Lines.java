@@ -1,5 +1,7 @@
 package com.example.javaautocad.AutoCad.domain;
 
+import com.example.javaautocad.AutoCad.dto.StatisticsDto;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +53,25 @@ public class Lines {
         return 1 - (lineStdDeviation() / lineAverage());
     }
 
-    public double lineDelivery() {
+    public List<Double> lineLength() {
+        List<Double> list = new ArrayList<>();
+        for (int i = 0; i < lineList.size(); i++) {
+            list.add(lineList.get(i).abLine());
+        }
+        return list;
+    }
 
+    public StatisticsDto lineDelivery() {
+        boolean valid = true;
+        double avg = lineAverage();
+        double var = lineVariance();
+        double std = lineStdDeviation();
+        double homo = lineHomogeneity();
+        List<Double> list = lineLength();
+        if (lineList.isEmpty() || avg == 0) {
+            valid = false;
+        }
+        return new StatisticsDto(avg, var, std, homo, valid, list);
     }
 
     public List<Line> getLineList() {
