@@ -1,8 +1,14 @@
-//package com.example.javaautocad.AutoCad.ai;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//
-//@Autowired
-//public class AutoAi {
-//    public
-//}
+package com.example.javaautocad.AutoCad.ai;
+
+import java.nio.file.Path;
+
+public class AutoAi {
+    private final String key = System.getenv("API_KEY");
+
+    public void analyze(Path file) {
+
+    }
+    public void keyMapping() {
+
+    }
+}
