@@ -22,7 +22,7 @@ public class FileWatcher {
         this.path = path;
     }
 
-    private void runPythonScript(String filePath) {
+    private void runPython(String filePath) {
         try {
             ProcessBuilder pb = new ProcessBuilder(
                     "python3",
@@ -39,16 +39,15 @@ public class FileWatcher {
 
     public void watchLoop() {
         try {
-            WatchKey key = null;
+            WatchKey key;
             while (surveillance) {
                 key = watchService.take();
                 for (WatchEvent<?> enent : key.pollEvents()) {
                     WatchEvent.Kind<?> kind = enent.kind();
                     if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                         Path loopPath = (Path) enent.context();
-                        runPythonScript(path.resolve(loopPath).toString());
+                        runPython(path.resolve(loopPath).toString());
                         Path jsonFile = Paths.get(path.resolve(loopPath).toString().replace(".dxf", ".json"));
-//                        System.out.println("감지: " + path.resolve(jsonFile));
                         ai.analyze(jsonFile);
                     }
                 }
