@@ -38,6 +38,7 @@ dependencies {
 //    implementation files('libs/kabeja-0.4.jar')
 //    implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-M4'
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.1'
 
 }
 
