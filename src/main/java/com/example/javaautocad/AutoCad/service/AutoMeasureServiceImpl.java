@@ -16,12 +16,7 @@ public class AutoMeasureServiceImpl implements AutoMeasureService {
     }
 
     public LineDto autoSummary(Polyline polyline) {
-        double total = polyline.resultLine();
-        double avg = polyline.averageLine();
-        double max = polyline.maxLine();
-        double min = polyline.minLine();
-
-        return new LineDto(total, avg, max, min);
+        return polyline.lineGraph();
     }
 
     public StatisticsDto lineStatistics(Lines lines) {
