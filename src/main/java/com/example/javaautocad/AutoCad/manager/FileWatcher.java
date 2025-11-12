@@ -1,6 +1,7 @@
 package com.example.javaautocad.AutoCad.manager;
 
 import com.example.javaautocad.AutoCad.ai.AutoAi;
+import com.example.javaautocad.AutoCad.message.ErrorMessage;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -20,6 +21,22 @@ public class FileWatcher {
         this.watchService = watchService;
         this.path = path;
     }
+
+    private void runPythonScript(String filePath) {
+        try {
+            ProcessBuilder pb = new ProcessBuilder(
+                    "python3",
+                    "/Users/sanghyunyoun/Desktop/dxf_to_json.py",
+                    filePath
+            );
+            pb.inheritIO();
+            Process process = pb.start();
+            process.waitFor();
+        } catch (Exception e) {
+            System.err.println(ErrorMessage.ERROR_PYTHON.getMessage());
+        }
+    }
+
     public void watchLoop() {
         try {
             WatchKey key = null;
@@ -29,8 +46,10 @@ public class FileWatcher {
                     WatchEvent.Kind<?> kind = enent.kind();
                     if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                         Path loopPath = (Path) enent.context();
-                        ai.analyze(loopPath);
-//                        System.out.println("감지: " + path.resolve(loopPath));
+                        runPythonScript(path.resolve(loopPath).toString());
+                        Path jsonFile = Paths.get(path.resolve(loopPath).toString().replace(".dxf", ".json"));
+//                        System.out.println("감지: " + path.resolve(jsonFile));
+                        ai.analyze(jsonFile);
                     }
                 }
                 key.reset();
