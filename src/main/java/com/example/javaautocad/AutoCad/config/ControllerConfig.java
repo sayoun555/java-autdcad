@@ -21,6 +21,6 @@ public class ControllerConfig {
         FileWatcher watcher = new FileWatcher(ai, null, null);
         InputView inputView = new InputView();
         OutputView view = new OutputView();
-        return new AutoCadController(manager, service, watcher, inputView, view);
+        return new AutoCadController(manager, watcher, inputView, view);
     }
 }
