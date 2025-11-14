@@ -57,8 +57,8 @@ public class FileWatcher {
                 }
                 key.reset();
             }
-        } catch (InterruptedException e) {
-            throw new IllegalArgumentException();
+        } catch (InterruptedException | ClosedWatchServiceException e) {
+
         }
     }
 
