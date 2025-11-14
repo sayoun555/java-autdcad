@@ -67,7 +67,7 @@ public class FileWatcher {
             surveillance = false;
             watchService.close();
         }catch (IOException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.CLOSE_ERROR.getMessage());
         }
     }
     public void start() {

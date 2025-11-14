@@ -10,5 +10,5 @@ import java.nio.file.Path;
 public interface AutoMeasureService {
     LineDto autoSummary(Polyline polyline);
     StatisticsDto lineStatistics(Lines lines);
-    public String aiCall(Path path);
+    String aiCall(Path path);
 }

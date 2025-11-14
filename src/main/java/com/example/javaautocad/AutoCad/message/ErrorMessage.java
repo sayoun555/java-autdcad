@@ -6,7 +6,8 @@ public enum ErrorMessage {
     JSON_ERROR("[ERROR] json 변환 실패"),
     RESPONSE_ERROR("[ERROR] 서버 응답이 없습니다."),
     INPUT_ERROR("[ERROR] 엔터만 눌러주세요"),
-    MAPPING_ERROR("[ERROR] 매핑에 실패했습니다.");
+    MAPPING_ERROR("[ERROR] 매핑에 실패했습니다."),
+    CLOSE_ERROR("[ERROR] 프로그램 종료에 실패했습니다.");
 
 
     private final String message;

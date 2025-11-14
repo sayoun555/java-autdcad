@@ -14,14 +14,12 @@ public class AutoCadController {
     private final FileWatcher fileWatcher;
     private final InputView inputView;
     private final OutputView outputView;
-    private final AutoMeasureService autoMeasureService;
 
 
-    public AutoCadController(FileWatcher fileWatcher, InputView inputView, OutputView outputView, AutoMeasureService autoMeasureService) {
+    public AutoCadController(FileWatcher fileWatcher, InputView inputView, OutputView outputView) {
         this.fileWatcher = fileWatcher;
         this.inputView = inputView;
         this.outputView = outputView;
-        this.autoMeasureService = autoMeasureService;
     }
 
     public void run() {
@@ -30,6 +28,15 @@ public class AutoCadController {
         }
         outputView.startPrint();
         fileWatcher.start();
+        outputView.exitStop();
+        while (true) {
+            if (inputView.stopInput()) {
+                outputView.exitView();
+                if (inputView.exitInput()) {
+                    fileWatcher.stop();
+                    break;
+                }
+            }
+        }
     }
-
 }
