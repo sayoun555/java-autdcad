@@ -2,6 +2,7 @@ package com.example.javaautocad.AutoCad.manager;
 
 import com.example.javaautocad.AutoCad.ai.AutoAi;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
+import com.example.javaautocad.AutoCad.view.OutputView;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -14,12 +15,14 @@ public class FileWatcher {
     private boolean surveillance;
     private ExecutorService executorService;
     private String dir = "/Users/sanghyunyoun";
+    private final OutputView outputView;
 
 
-    public FileWatcher(AutoAi ai, WatchService watchService, Path path) {
+    public FileWatcher(AutoAi ai, WatchService watchService, Path path, OutputView outputView) {
         this.ai = ai;
         this.watchService = watchService;
         this.path = path;
+        this.outputView = outputView;
     }
 
     private void runPython(String filePath) {
@@ -48,7 +51,8 @@ public class FileWatcher {
                         Path loopPath = (Path) enent.context();
                         runPython(path.resolve(loopPath).toString());
                         Path jsonFile = Paths.get(path.resolve(loopPath).toString().replace(".dxf", ".json"));
-                        ai.analyze(jsonFile);
+                        String result = ai.analyze(jsonFile);
+                        outputView.result(result);
                     }
                 }
                 key.reset();
