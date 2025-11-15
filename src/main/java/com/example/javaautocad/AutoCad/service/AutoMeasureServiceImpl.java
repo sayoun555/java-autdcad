@@ -11,7 +11,7 @@ import java.nio.file.Path;
 public class AutoMeasureServiceImpl implements AutoMeasureService {
     private final AutoAi ai;
 
-    public AutoMeasureServiceImpl(AutoAi ai) {
+    public AutoMeasureServiceImpl (AutoAi ai) {
         this.ai = ai;
     }
 

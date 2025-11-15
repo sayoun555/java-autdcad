@@ -8,9 +8,8 @@ public class InputView {
     private final String ENTER = "";
     private final String STOP = "stop";
 
-    public boolean input() {
-        String check = scanner.nextLine();
-        return Objects.equals(check, ENTER);
+    public String input() {
+        return scanner.nextLine();
     }
 
     public boolean stopInput() {

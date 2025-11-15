@@ -2,6 +2,7 @@ package com.example.javaautocad.AutoCad.manager;
 
 import com.example.javaautocad.AutoCad.ai.AutoAi;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
+import com.example.javaautocad.AutoCad.service.AutoMeasureService;
 import com.example.javaautocad.AutoCad.view.OutputView;
 
 import java.io.IOException;
@@ -9,20 +10,19 @@ import java.nio.file.*;
 import java.util.concurrent.ExecutorService;
 
 public class FileWatcher {
-    private final AutoAi ai;
     private WatchService watchService;
     private Path path;
     private boolean surveillance;
     private ExecutorService executorService;
     private String dir = "/Users/sanghyunyoun";
     private final OutputView outputView;
+    private final AutoMeasureService autoMeasureService;
 
-
-    public FileWatcher(AutoAi ai, WatchService watchService, Path path, OutputView outputView) {
-        this.ai = ai;
+    public FileWatcher(AutoMeasureService service , WatchService watchService, Path path, OutputView outputView) {
         this.watchService = watchService;
         this.path = path;
         this.outputView = outputView;
+        this.autoMeasureService = service;
     }
 
     private void runPython(String filePath) {
@@ -51,7 +51,7 @@ public class FileWatcher {
                         Path loopPath = (Path) enent.context();
                         runPython(path.resolve(loopPath).toString());
                         Path jsonFile = Paths.get(path.resolve(loopPath).toString().replace(".dxf", ".json"));
-                        String result = ai.analyze(jsonFile);
+                        String result = autoMeasureService.aiCall(jsonFile);
                         outputView.result(result);
                     }
                 }
@@ -70,11 +70,11 @@ public class FileWatcher {
             throw new IllegalArgumentException(ErrorMessage.CLOSE_ERROR.getMessage());
         }
     }
-    public void start() {
+    public void start(String file) {
         surveillance = true;
         try {
             watchService = FileSystems.getDefault().newWatchService();
-            path = Paths.get(dir);
+            path = Paths.get(file);
             path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
             new Thread(this::watchLoop).start();
         } catch (IOException e) {

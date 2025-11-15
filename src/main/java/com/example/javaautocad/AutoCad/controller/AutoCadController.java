@@ -24,11 +24,8 @@ public class AutoCadController {
 
     public void run() {
         outputView.startView();
-        if (!inputView.input()) {
-            throw new IllegalArgumentException(ErrorMessage.MAPPING_ERROR.getMessage());
-        }
         outputView.startPrint();
-        fileWatcher.start();
+        fileWatcher.start(inputView.input());
         outputView.exitStop();
         while (true) {
             if (inputView.stopInput()) {

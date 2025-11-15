@@ -1,7 +1,6 @@
 package com.example.javaautocad.AutoCad.ai;
 
 import com.example.javaautocad.AutoCad.domain.Lines;
-import com.example.javaautocad.AutoCad.dto.StatisticsDto;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
 import com.example.javaautocad.AutoCad.parser.AutoParser;
 
