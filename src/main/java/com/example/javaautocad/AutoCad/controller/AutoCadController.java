@@ -4,8 +4,6 @@ import com.example.javaautocad.AutoCad.manager.FileWatcher;
 import com.example.javaautocad.AutoCad.view.InputView;
 import com.example.javaautocad.AutoCad.view.OutputView;
 
-import java.util.List;
-
 public class AutoCadController {
     private final FileWatcher fileWatcher;
     private final InputView inputView;
@@ -18,18 +16,29 @@ public class AutoCadController {
         this.outputView = outputView;
     }
 
-    private void mainLoop() {
+    private void mainView(){
         outputView.startView();
         outputView.startPrint();
+    }
+
+    private void startWetchar() {
         fileWatcher.start(inputView.input());
         outputView.exitStop();
+    }
+
+    private void mainLoop() {
+        mainView();
+        startWetchar();
         while (true) {
             if (inputView.stopInput()) {
                 outputView.exitView();
-                if (inputView.exitInput()) {
-                    fileWatcher.stop();
-                    break;
-                }
+                break;
+            }
+        }
+        while (true) {
+            if (inputView.exitInput()) {
+                fileWatcher.stop();
+                break;
             }
         }
     }
