@@ -9,7 +9,8 @@ public enum ErrorMessage {
     MAPPING_ERROR("[ERROR] 매핑에 실패했습니다."),
     CLOSE_ERROR("[ERROR] 프로그램 종료에 실패했습니다."),
     START_ERROR("[ERROR] 파일 감시 실패"),
-    CONVERT_ERROR("[ERROR] dxf 변환 실패");
+    CONVERT_ERROR("[ERROR] dxf 변환 실패"),
+    FILE_ERROR("[ERROR] 파일 불러오기 실패");
 
 
 

@@ -21,6 +21,5 @@ public class AutoMeasureServiceImpl implements AutoMeasureService {
     public String analyzeDxf(Path dxf) {
         Path jsonPath = dxfConverter.convert(dxf);
         return ai.analyze(jsonPath);
-
-
+    }
 }
