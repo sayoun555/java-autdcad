@@ -1,6 +1,5 @@
 package com.example.javaautocad.AutoCad.manager;
 
-import com.example.javaautocad.AutoCad.ai.AutoAi;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
 import com.example.javaautocad.AutoCad.service.AutoMeasureService;
 import com.example.javaautocad.AutoCad.view.OutputView;
@@ -14,52 +13,60 @@ public class FileWatcher {
     private Path path;
     private boolean surveillance;
     private ExecutorService executorService;
-    private String dir = "/Users/sanghyunyoun";
+//    private String dir = "/Users/sanghyunyoun";
     private final OutputView outputView;
     private final AutoMeasureService autoMeasureService;
 
-    public FileWatcher(AutoMeasureService service , WatchService watchService, Path path, OutputView outputView) {
-        this.watchService = watchService;
-        this.path = path;
+    public FileWatcher(AutoMeasureService service, OutputView outputView) {
         this.outputView = outputView;
         this.autoMeasureService = service;
     }
 
-    private void runPython(String filePath) {
-        try {
-            ProcessBuilder pb = new ProcessBuilder(
-                    "python3",
-                    "/Users/sanghyunyoun/Desktop/dxf_to_json.py",
-                    filePath
-            );
-            pb.inheritIO();
-            Process process = pb.start();
-            process.waitFor();
-        } catch (Exception e) {
-            System.err.println(ErrorMessage.ERROR_PYTHON.getMessage());
-        }
-    }
-
     public void watchLoop() {
         try {
-            WatchKey key;
             while (surveillance) {
-                key = watchService.take();
-                for (WatchEvent<?> enent : key.pollEvents()) {
-                    WatchEvent.Kind<?> kind = enent.kind();
-                    if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-                        Path loopPath = (Path) enent.context();
-                        runPython(path.resolve(loopPath).toString());
-                        Path jsonFile = Paths.get(path.resolve(loopPath).toString().replace(".dxf", ".json"));
-                        String result = autoMeasureService.aiCall(jsonFile);
-                        outputView.result(result);
-                    }
-                }
+                WatchKey key = watchService.take();
+                events(key);
                 key.reset();
             }
         } catch (InterruptedException | ClosedWatchServiceException e) {
-
         }
+    }
+
+    private void events(WatchKey key) {
+        for (WatchEvent<?> event : key.pollEvents()) {
+            processEvent(event);
+        }
+    }
+
+    private void processEvent(WatchEvent<?> event) {
+        if (!isModify(event)) {
+            return;
+        }
+
+        Path changedFile = filePath(event);
+        if (!isDxfFile(changedFile)) {
+            return;
+        }
+
+        analyzeDisplay(changedFile);
+    }
+
+    private boolean isModify(WatchEvent<?> event) {
+        return event.kind() == StandardWatchEventKinds.ENTRY_MODIFY;
+    }
+
+    private Path filePath(WatchEvent<?> event) {
+        return path.resolve((Path) event.context());
+    }
+
+    private boolean isDxfFile(Path filePath) {
+        return filePath.toString().endsWith(".dxf");
+    }
+
+    private void analyzeDisplay(Path dxf) {
+        String result = autoMeasureService.analyzeDxf(dxf);
+        outputView.result(result);
     }
 
     public void stop() {
@@ -78,7 +85,7 @@ public class FileWatcher {
             path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
             new Thread(this::watchLoop).start();
         } catch (IOException e) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(ErrorMessage.START_ERROR.getMessage());
         }
     }
 }

@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 
 public class AiClient {
     private final String AUTHORIZATION = "Authorization";
-    private final String BEARER =  "Bearer ";
+    private final String BEARER = "Bearer ";
     private final String TYPE = "Content-Type";
     private final String APP = "application/json";
 
@@ -26,6 +26,7 @@ public class AiClient {
             throw new IllegalArgumentException(ErrorMessage.JSON_ERROR.getMessage());
         }
     }
+
     public HttpRequest aiRequest(AutoAi ai, AiDto dto) {
         return HttpRequest.newBuilder()
                 .uri(URI.create("https://api.openai.com/v1/chat/completions"))

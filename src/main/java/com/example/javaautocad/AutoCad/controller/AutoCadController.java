@@ -1,10 +1,6 @@
 package com.example.javaautocad.AutoCad.controller;
 
-import com.example.javaautocad.AutoCad.dto.LineDto;
-import com.example.javaautocad.AutoCad.manager.AutoManager;
 import com.example.javaautocad.AutoCad.manager.FileWatcher;
-import com.example.javaautocad.AutoCad.message.ErrorMessage;
-import com.example.javaautocad.AutoCad.service.AutoMeasureService;
 import com.example.javaautocad.AutoCad.view.InputView;
 import com.example.javaautocad.AutoCad.view.OutputView;
 
@@ -22,7 +18,7 @@ public class AutoCadController {
         this.outputView = outputView;
     }
 
-    public void run() {
+    private void mainLoop() {
         outputView.startView();
         outputView.startPrint();
         fileWatcher.start(inputView.input());
@@ -36,5 +32,9 @@ public class AutoCadController {
                 }
             }
         }
+    }
+
+    public void run() {
+        mainLoop();
     }
 }

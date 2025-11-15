@@ -5,8 +5,7 @@ public class OutputView {
     private final String LINE = "====================================================";
     private final String EXIT = "종료 하시겠습니까?";
     private final String STOP = "프로그램을 종료하려면 stop을 적어주세요";
-    private final String START_PRINT = "시작 하시겠습니까?";
-    private final String EXIT_PRINT = "프로그램 종료합니다";
+    private final String START_PRINT = "dxf 파일 위치를 입력해주세요.";
 
     public void result(String outPut) {
         System.out.println(outPut);

@@ -11,6 +11,7 @@ public class Lines {
     public Lines(List<Line> lineList) {
         this.lineList = new ArrayList<>(lineList);
     }
+
     public double medianLength() {
         List<Double> y = new ArrayList<>();
         for (Line line : lineList) {
@@ -21,7 +22,7 @@ public class Lines {
         if (num % 2 > 0) {
             return y.get(num / 2);
         }
-        return (y.get(num/2 - 1) + y.get(num/2)) / 2;
+        return (y.get(num / 2 - 1) + y.get(num / 2)) / 2;
     }
 
     private double lineAverage() {
@@ -33,6 +34,7 @@ public class Lines {
         }
         return average / lineList.size();
     }
+
     private double lineVariance() {
         double mean = lineAverage();
         double cumulative = 0.0;

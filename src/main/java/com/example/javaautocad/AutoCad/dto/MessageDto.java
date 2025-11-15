@@ -1,7 +1,5 @@
 package com.example.javaautocad.AutoCad.dto;
 
-import java.util.List;
-
 public class MessageDto {
     private final String role;
     private final String content;
