@@ -12,13 +12,14 @@ import com.example.javaautocad.AutoCad.view.OutputView;
 
 public class ControllerConfig {
     public AutoCadController build() {
+        EnvConfig envConfig = new EnvConfig();
+        InputView inputView = new InputView();
         OutputView view = new OutputView();
         AutoParser autoParser = new AutoParser();
         AutoAi ai = new AutoAi(autoParser);
-        DxfConverter dxfConverter = new DxfConverter();
+        DxfConverter dxfConverter = new DxfConverter(envConfig.getPython(), envConfig.getScript());
         AutoMeasureService autoMeasureService = new AutoMeasureServiceImpl(ai, dxfConverter);
         FileWatcher watcher = new FileWatcher(autoMeasureService, view);
-        InputView inputView = new InputView();
-        return new AutoCadController(watcher, inputView, view);
+        return new AutoCadController(watcher, inputView, view, envConfig);
     }
 }

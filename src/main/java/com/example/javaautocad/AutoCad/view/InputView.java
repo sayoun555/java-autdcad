@@ -21,4 +21,20 @@ public class InputView {
         String check = scanner.nextLine();
         return Objects.equals(check, ENTER);
     }
+
+    public String inputPython() {
+        return scanner.nextLine().trim();
+    }
+
+    public String inputScript() {
+        return scanner.nextLine().trim();
+    }
+
+    public boolean askConfig() {
+        return scanner.nextLine().trim().equalsIgnoreCase("y");
+    }
+
+    public String inputKey() {
+        return scanner.nextLine().trim();
+    }
 }
