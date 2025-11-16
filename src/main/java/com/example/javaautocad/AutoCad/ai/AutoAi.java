@@ -1,5 +1,6 @@
 package com.example.javaautocad.AutoCad.ai;
 
+import com.example.javaautocad.AutoCad.config.EnvConfig;
 import com.example.javaautocad.AutoCad.domain.Lines;
 import com.example.javaautocad.AutoCad.dto.AiDto;
 import com.example.javaautocad.AutoCad.dto.MessageDto;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoAi {
-    private final String KEY = System.getenv("API_KEY");
+    private final String KEY = new EnvConfig().getApiKey();
     private final AiClient aiClient;
     private final AutoParser autoParser;
     private String fileResult;
