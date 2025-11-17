@@ -9,6 +9,10 @@ public class StatisticsDto {
     private final double lineHomogeneity;
     private final boolean valid;
     private final List<Double> lineLength;
+    private final int lineCount;
+    private final int arcCount;
+    private final int circleCount;
+    private final int ellipseCount;
 
     public StatisticsDto(double lineAverage, double lineVariance, double lineStdDeviation, double lineHomogeneity, boolean valid, List<Double> lineLength) {
         this.lineAverage = lineAverage;

@@ -5,8 +5,6 @@ import java.util.Scanner;
 
 public class InputView {
     private final Scanner scanner = new Scanner(System.in);
-    private final String ENTER = "";
-    private final String STOP = "stop";
 
     public String input() {
         return scanner.nextLine();

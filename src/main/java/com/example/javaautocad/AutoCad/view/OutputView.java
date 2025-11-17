@@ -7,7 +7,7 @@ public class OutputView {
     private final String LINE = "================================================================================";
     private final String EXIT = "종료 하시겠습니까?";
     private final String STOP = "프로그램을 종료하려면 stop을 적어주세요";
-    private final String START_PRINT = "dxf 파일 위치를 입력해주세요.";
+    private final String START_PRINT = "감시할 폴더 경로를 입력하세요:";
     private final String PYTHON = "파이썬: ";
     private final String SCRIPT = "스크립트: ";
     private final String UPDATE = "설정 업데이트 완료";
@@ -63,7 +63,7 @@ public class OutputView {
     }
 
     public void inputFolderMessage() {
-        System.out.println("감시할 폴더 경로를 입력하세요:");
+        System.out.println(START_PRINT);
     }
 
 }

@@ -14,8 +14,6 @@ public enum ErrorMessage {
     ENV_ERROR("[ERROR] 설정 저장하기 실패"),
     CHOICES_ERROR("[ERROR] choices 가 없습니다.");
 
-
-
     private final String message;
 
     ErrorMessage(String message) {
