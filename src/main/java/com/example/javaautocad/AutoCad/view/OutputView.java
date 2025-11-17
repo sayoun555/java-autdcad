@@ -1,11 +1,7 @@
 package com.example.javaautocad.AutoCad.view;
 
-import java.nio.file.Path;
-
 public class OutputView {
-    private final String START = "[감시 시작]\n";
-    private final String LINE = "================================================================================";
-    private final String EXIT = "종료 하시겠습니까?";
+    private final String EXIT = "종료 하시겠습니다";
     private final String STOP = "프로그램을 종료하려면 stop을 적어주세요";
     private final String START_PRINT = "감시할 폴더 경로를 입력하세요:";
     private final String PYTHON = "파이썬: ";
@@ -24,17 +20,8 @@ public class OutputView {
         System.out.println(EXIT);
     }
 
-//    public void startView() {
-//        System.out.println(START_PRINT);
-//    }
-
     public void exitStop() {
         System.out.println(STOP);
-    }
-
-    public void startPrint() {
-        System.out.println(START);
-        System.out.println(LINE);
     }
 
     public void config(String python, String script) {

@@ -1,5 +1,7 @@
 package com.example.javaautocad.AutoCad.domain;
 
+import com.example.javaautocad.AutoCad.dto.EntityCountStatisticsDto;
+
 public class EntityStatistics {
     private final int lineCount;
     private final int arcCount;
@@ -25,20 +27,14 @@ public class EntityStatistics {
         return (double) totalCurves / totalEntities();
     }
 
-    public int getLineCount() {
-        return lineCount;
-    }
-
-    public int getArcCount() {
-        return arcCount;
-    }
-
-    public int getCircleCount() {
-        return circleCount;
-    }
-
-    public int getEllipseCount() {
-        return ellipseCount;
+    public EntityCountStatisticsDto entityDelivery() {
+        return new EntityCountStatisticsDto(
+                lineCount,
+                arcCount,
+                circleCount,
+                ellipseCount,
+                curve()
+        );
     }
 
 }

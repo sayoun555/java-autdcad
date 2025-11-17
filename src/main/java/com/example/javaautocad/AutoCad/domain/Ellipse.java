@@ -45,4 +45,3 @@ public class Ellipse {
         return rotation;
     }
 }
-}

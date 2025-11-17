@@ -5,7 +5,8 @@ import com.example.javaautocad.AutoCad.dto.EllipseStatisticsDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ellipses { private final List<Ellipse> ellipseList;
+public class Ellipses {
+    private final List<Ellipse> ellipseList;
 
     public Ellipses(List<Ellipse> ellipseList) {
         this.ellipseList = new ArrayList<>(ellipseList);
@@ -55,7 +56,7 @@ public class Ellipses { private final List<Ellipse> ellipseList;
         return sum / ellipseList.size();
     }
 
-    public EllipseStatisticsDto toDto() {
+    public EllipseStatisticsDto ellipesDelivery() {
         boolean valid = !ellipseList.isEmpty();
         return new EllipseStatisticsDto(
                 averageMajorRadius(),

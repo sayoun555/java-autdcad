@@ -14,6 +14,7 @@ public class ArcStatisticsDto {
         this.count = count;
         this.valid = valid;
     }
+
     public double getAverageRadius() {
         return averageRadius;
     }

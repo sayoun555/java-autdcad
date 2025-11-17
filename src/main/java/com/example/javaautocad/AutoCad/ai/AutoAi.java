@@ -1,11 +1,8 @@
 package com.example.javaautocad.AutoCad.ai;
 
 import com.example.javaautocad.AutoCad.config.EnvConfig;
-import com.example.javaautocad.AutoCad.domain.EntityStatistics;
-import com.example.javaautocad.AutoCad.domain.Lines;
-import com.example.javaautocad.AutoCad.dto.AiDto;
-import com.example.javaautocad.AutoCad.dto.LineStatisticsDto;
-import com.example.javaautocad.AutoCad.dto.MessageDto;
+import com.example.javaautocad.AutoCad.domain.*;
+import com.example.javaautocad.AutoCad.dto.*;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
 import com.example.javaautocad.AutoCad.parser.AutoParser;
 
@@ -36,19 +33,43 @@ public class AutoAi {
         }
     }
 
-    public EntityStatistics entityParser() {
-        return new EntityStatistics(autoParser.)
+    private Lines lineParser() {
+        return new Lines(autoParser.lineParser(fileResult));
     }
 
-    private Lines parser() {
-        return new Lines(autoParser.lineParser(fileResult));
+    private Arcs arcParser() {
+        return new Arcs(autoParser.arcParser(fileResult));
+    }
+
+    private Circles circleParser() {
+        return new Circles(autoParser.circlesParser(fileResult));
+    }
+
+    private Ellipses ellipseParser() {
+        return new Ellipses(autoParser.ellipseParser(fileResult));
+    }
+
+    private EntityStatistics entityParser() {
+        return autoParser.parseStatistics(fileResult);
     }
 
     private String promptBuild() {
         AiPrompt aiPrompt = new AiPrompt();
-        return aiPrompt.aiPromptBuilder(fileResult, parser().lineDelivery());
-    }
+        LineStatisticsDto lineStats = lineParser().lineDelivery();
+        ArcStatisticsDto arcStats = arcParser().aecDelivery();
+        CircleStatisticsDto circleStats = circleParser().ciseclsDelivery();
+        EllipseStatisticsDto ellipseStats = ellipseParser().ellipesDelivery();
+        EntityCountStatisticsDto entityStats = entityParser().entityDelivery();
 
+        return aiPrompt.aiPromptBuilder(
+                fileResult,
+                lineStats,
+                entityStats,
+                circleStats,
+                arcStats,
+                ellipseStats
+        );
+    }
 
     public String analyze(Path path) {
         fileIo(path);

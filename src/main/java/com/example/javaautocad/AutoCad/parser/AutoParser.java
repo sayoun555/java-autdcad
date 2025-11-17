@@ -24,6 +24,8 @@ public class AutoParser {
     private final String ARC = "ARC";
     private final String CIRCLE = "CIRCLE";
     private final String ELLIPSE = "ELLIPSE";
+    private final String MAJOR_AXIS = "major_axis";
+    private final String RATIO = "ratio";
 
     public List<Line> lineParser(String file) {
         try {
@@ -109,7 +111,39 @@ public class AutoParser {
         }
     }
 
-    public List<>
+    public List<Ellipse> ellipseParser(String file) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Ellipse> ellipses = new ArrayList<>();
+            JsonNode jsonNode = objectMapper.readTree(file);
+            for (int i = 0; i < jsonNode.size(); i++) {
+                JsonNode node = jsonNode.get(i);
+                if (!ELLIPSE.equals(node.get(TYPE).asText())) {
+                    continue;
+                }
+                JsonNode center = node.get(CENTER);
+                JsonNode majorAxis = node.get(MAJOR_AXIS);
+                double ratio = node.get(RATIO).asDouble();
+
+                Point centerPoint = new Point(center.get(0).asDouble(), center.get(1).asDouble());
+                double majorRadius = Math.sqrt(
+                        Math.pow(majorAxis.get(0).asDouble(), 2) +
+                                Math.pow(majorAxis.get(1).asDouble(), 2)
+                );
+                double minorRadius = majorRadius * ratio;
+                double rotation = Math.atan2(
+                        majorAxis.get(1).asDouble(),
+                        majorAxis.get(0).asDouble()
+                );
+
+                ellipses.add(new Ellipse(centerPoint, majorRadius, minorRadius, rotation));
+            }
+            return ellipses;
+        } catch (Exception e) {
+            throw new IllegalArgumentException(ErrorMessage.ELLIPSE_ERROR.getMessage());
+        }
+    }
+
     public EntityStatistics parseStatistics(String file) {
         Map<String, Integer> counts = countEntities(file);
         return new EntityStatistics(counts.getOrDefault(LINE, 0), counts.getOrDefault(ARC, 0), counts.getOrDefault(CIRCLE, 0), counts.getOrDefault(ELLIPSE, 0));

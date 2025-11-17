@@ -9,7 +9,7 @@ public class Circles {
     private final List<Circle> circles;
 
     public Circles(List<Circle> circles) {
-        this.circles = new ArrayList<>();
+        this.circles = new ArrayList<>(circles);
     }
 
     private double averageRadius() {
@@ -17,7 +17,7 @@ public class Circles {
             return 0.0;
         }
         double sum = 0.0;
-        for (Circle circle :circles) {
+        for (Circle circle : circles) {
             sum += circle.getRadius();
         }
         return sum / circles.size();
@@ -46,7 +46,7 @@ public class Circles {
         return sum / circles.size();
     }
 
-    public CircleStatisticsDto toDto() {
+    public CircleStatisticsDto ciseclsDelivery() {
         boolean valid = !circles.isEmpty();
         return new CircleStatisticsDto(
                 averageRadius(),

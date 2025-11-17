@@ -62,15 +62,4 @@ public class AiClient {
             throw new IllegalArgumentException(ErrorMessage.MAPPING_ERROR.getMessage() + " / " + e.getMessage());
         }
     }
-
-
-//    public String aiParser(AutoAi ai, AiDto dto) {
-//        try {
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            JsonNode node = objectMapper.readTree(aiResponse(ai, dto).body());
-//            return node.path("choices").get(0).path("message").path("content").asText();
-//        } catch (JsonProcessingException e) {
-//            throw new IllegalArgumentException(ErrorMessage.MAPPING_ERROR.getMessage());
-//        }
-//    }
 }

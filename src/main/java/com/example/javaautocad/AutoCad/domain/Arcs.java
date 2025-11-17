@@ -9,7 +9,7 @@ public class Arcs {
     private final List<Arc> arcs;
 
     public Arcs(List<Arc> arcs) {
-        this.arcs = new ArrayList<>();
+        this.arcs = new ArrayList<>(arcs);
     }
 
     private double averageRadius() {
@@ -45,7 +45,7 @@ public class Arcs {
         return sum / arcs.size();
     }
 
-    public ArcStatisticsDto dto() {
+    public ArcStatisticsDto aecDelivery() {
         boolean valid = !arcs.isEmpty();
         return new ArcStatisticsDto(
                 averageRadius(),
