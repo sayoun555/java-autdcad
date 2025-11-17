@@ -3,7 +3,7 @@ package com.example.javaautocad.AutoCad.dto;
 import java.util.List;
 
 public class AiDto {
-    private final String model = "gpt-5";
+    private final String model = "gpt-4o-mini";
     private final List<MessageDto> messages;
     private final double temperature;
 

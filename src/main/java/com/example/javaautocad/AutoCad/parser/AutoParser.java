@@ -20,7 +20,8 @@ public class AutoParser {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             List<Line> lines = new ArrayList<>();
-            JsonNode jsonNode = objectMapper.readTree(new File(file));
+//            JsonNode jsonNode = objectMapper.readTree(new File(file));
+            JsonNode jsonNode = objectMapper.readTree(file);
             for (int i = 0; i < jsonNode.size(); i++) {
                 JsonNode node = jsonNode.get(i);
                 if (!LINE.equals(node.get(TYPE).asText())) {

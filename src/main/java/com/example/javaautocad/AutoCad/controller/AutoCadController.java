@@ -10,6 +10,7 @@ public class AutoCadController {
     private final InputView inputView;
     private final OutputView outputView;
     private final EnvConfig envConfig;
+    private final String STOP = "stop";
 
 
     public AutoCadController(FileWatcher fileWatcher, InputView inputView, OutputView outputView, EnvConfig envConfig) {
@@ -20,14 +21,20 @@ public class AutoCadController {
     }
 
     private void mainView() {
-        outputView.startView();
+//        outputView.startView();
         outputView.startPrint();
     }
 
     private void startWetchar() {
-        fileWatcher.start(inputView.input());
-        outputView.exitStop();
+        outputView.inputFolderMessage();   // 폴더 안내 메시지 출력
+        String folder = inputView.inputCommand();  // 폴더 입력 받기
+
+        fileWatcher.start(folder);          // 감시 시작
+        outputView.exitStop();              // stop 안내 메시지
     }
+
+//        fileWatcher.start(inputView.input());
+//        outputView.exitStop();
 
     private void envSetup() {
         if (!envConfig.hassConfig()) {
@@ -54,15 +61,14 @@ public class AutoCadController {
     }
 
     private void mainLoop() {
-        mainView();
         startWetchar();
+
         while (true) {
-            if (inputView.stopInput()) {
+            String cmd = inputView.inputCommand();
+            if (cmd.equalsIgnoreCase(STOP)) {
+                fileWatcher.stop();
                 outputView.exitView();
-                if (inputView.exitInput()) {
-                    fileWatcher.stop();
-                    break;
-                }
+                break;
             }
         }
     }

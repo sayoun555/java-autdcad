@@ -13,6 +13,9 @@ import java.util.Map;
 public class EnvConfig {
     private static final String ENVFILE = ".env";
     private Map<String, String> envMap;
+    private final String PYTHON = "PYTHON_PATH";
+    private final String SCRIPT = "SCRIPT_PATH";
+    private final String APIKEY = "API_KEY";
 
     public EnvConfig() {
         this.envMap = loadEnv();
@@ -34,19 +37,19 @@ public class EnvConfig {
     }
 
     public boolean hassConfig() {
-        return envMap.containsKey("PYTHON_PATH") && envMap.containsKey("SCRIPT_PATH") && envMap.containsKey("API_KEY");
+        return envMap.containsKey(PYTHON) && envMap.containsKey(SCRIPT) && envMap.containsKey(APIKEY);
     }
 
     public String getPython() {
-        return envMap.get("PYTHON_PATH");
+        return envMap.get(PYTHON);
     }
 
     public String getScript() {
-        return envMap.get("SCRIPT_PATH");
+        return envMap.get(SCRIPT);
     }
 
     public String getApiKey() {
-        return envMap.get("API_KEY");
+        return envMap.get(APIKEY);
     }
 
     public void save(String python, String script, String key) {

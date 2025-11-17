@@ -13,15 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoAi {
-    private final String KEY = new EnvConfig().getApiKey();
+    private final String USER = "user";
     private final AiClient aiClient;
     private final AutoParser autoParser;
     private String fileResult;
+    private final EnvConfig envConfig;
 
 
-    public AutoAi(AutoParser autoParser) {
+    public AutoAi(AutoParser autoParser, EnvConfig envConfig) {
         this.aiClient = new AiClient();
         this.autoParser = autoParser;
+        this.envConfig = envConfig;
     }
 
     private void fileIo(Path path) {
@@ -45,15 +47,16 @@ public class AutoAi {
     public String analyze(Path path) {
         fileIo(path);
         List<MessageDto> messageDtos = new ArrayList<>();
-        messageDtos.add(new MessageDto("user", promptBuild()));
+        messageDtos.add(new MessageDto(USER, promptBuild()));
         AiDto aiDto = new AiDto(messageDtos, 0.7);
         return aiClient.aiParser(this, aiDto);
     }
 
     public String keyMapping() {
-        if (KEY == null || KEY.isEmpty()) {
+        String key = envConfig.getApiKey();
+        if (key == null || key.isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.KEY_ERROR.getMessage());
         }
-        return KEY;
+        return key;
     }
 }

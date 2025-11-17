@@ -3,17 +3,15 @@ package com.example.javaautocad.AutoCad.manager;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
 import com.example.javaautocad.AutoCad.service.AutoMeasureService;
 import com.example.javaautocad.AutoCad.view.OutputView;
+import java.nio.file.StandardWatchEventKinds;
 
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.concurrent.ExecutorService;
 
 public class FileWatcher {
     private WatchService watchService;
     private Path path;
     private boolean surveillance;
-    private ExecutorService executorService;
-//    private String dir = "/Users/sanghyunyoun";
     private final OutputView outputView;
     private final AutoMeasureService autoMeasureService;
 
@@ -65,8 +63,13 @@ public class FileWatcher {
     }
 
     private void analyzeDisplay(Path dxf) {
-        String result = autoMeasureService.analyzeDxf(dxf);
-        outputView.result(result);
+//        try {
+            String result = autoMeasureService.analyzeDxf(dxf);
+            outputView.result(result);
+//        } catch (Exception e) {
+//            System.err.println("🔥 에러 발생: " + e.getMessage());
+//            e.printStackTrace();  // 전체 스택 트레이스 출력
+//        }
     }
 
     public void stop() {
@@ -82,6 +85,13 @@ public class FileWatcher {
         try {
             watchService = FileSystems.getDefault().newWatchService();
             path = Paths.get(file);
+            Files.list(path)
+                    .filter(p -> p.toString().endsWith(".dxf"))
+                    .findFirst()
+                    .ifPresent(this::analyzeDisplay);
+//            Files.list(path)
+//                    .filter(p -> p.toString().endsWith(".dxf"))
+//                    .forEach(this::analyzeDisplay);
             path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
             new Thread(this::watchLoop).start();
         } catch (IOException e) {

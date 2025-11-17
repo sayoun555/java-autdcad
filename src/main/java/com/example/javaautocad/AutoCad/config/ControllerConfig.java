@@ -16,7 +16,7 @@ public class ControllerConfig {
         InputView inputView = new InputView();
         OutputView view = new OutputView();
         AutoParser autoParser = new AutoParser();
-        AutoAi ai = new AutoAi(autoParser);
+        AutoAi ai = new AutoAi(autoParser, envConfig);
         DxfConverter dxfConverter = new DxfConverter(envConfig.getPython(), envConfig.getScript());
         AutoMeasureService autoMeasureService = new AutoMeasureServiceImpl(ai, dxfConverter);
         FileWatcher watcher = new FileWatcher(autoMeasureService, view);

@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 public class OutputView {
     private final String START = "[감시 시작]\n";
-    private final String LINE = "====================================================";
+    private final String LINE = "================================================================================";
     private final String EXIT = "종료 하시겠습니까?";
     private final String STOP = "프로그램을 종료하려면 stop을 적어주세요";
     private final String START_PRINT = "dxf 파일 위치를 입력해주세요.";
@@ -24,9 +24,9 @@ public class OutputView {
         System.out.println(EXIT);
     }
 
-    public void startView() {
-        System.out.println(START_PRINT);
-    }
+//    public void startView() {
+//        System.out.println(START_PRINT);
+//    }
 
     public void exitStop() {
         System.out.println(STOP);
@@ -60,6 +60,10 @@ public class OutputView {
 
     public void keyOutput() {
         System.out.println(KEY);
+    }
+
+    public void inputFolderMessage() {
+        System.out.println("감시할 폴더 경로를 입력하세요:");
     }
 
 }

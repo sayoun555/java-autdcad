@@ -17,6 +17,9 @@ public class AiClient {
     private final String BEARER = "Bearer ";
     private final String TYPE = "Content-Type";
     private final String APP = "application/json";
+    private final String CHOC = "choices";
+    private final String MESSAGE = "message";
+    private final String CONTENT = "content";
 
     public String serialization(AiDto dto) {
         try {
@@ -48,10 +51,26 @@ public class AiClient {
     public String aiParser(AutoAi ai, AiDto dto) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode node = objectMapper.readTree(aiResponse(ai, dto).body());
-            return node.path("choices").get(0).path("message").path("content").asText();
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException(ErrorMessage.MAPPING_ERROR.getMessage());
+
+            String body = aiResponse(ai, dto).body();
+            JsonNode node = objectMapper.readTree(body);
+            if (!node.has(CHOC) || node.get(CHOC).isEmpty()) {
+                throw new IllegalArgumentException(ErrorMessage.CHOICES_ERROR.getMessage());
+            }
+            return node.path(CHOC).get(0).path(MESSAGE).path(CONTENT).asText();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(ErrorMessage.MAPPING_ERROR.getMessage() + " / " + e.getMessage());
         }
     }
+
+
+//    public String aiParser(AutoAi ai, AiDto dto) {
+//        try {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            JsonNode node = objectMapper.readTree(aiResponse(ai, dto).body());
+//            return node.path("choices").get(0).path("message").path("content").asText();
+//        } catch (JsonProcessingException e) {
+//            throw new IllegalArgumentException(ErrorMessage.MAPPING_ERROR.getMessage());
+//        }
+//    }
 }

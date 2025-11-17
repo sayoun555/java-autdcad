@@ -12,14 +12,18 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public boolean stopInput() {
-        String check = scanner.nextLine();
-        return Objects.equals(check, STOP);
-    }
+//    public boolean stopInput() {
+//        String check = scanner.nextLine();
+//        return Objects.equals(check, STOP);
+//    }
+//
+//    public boolean exitInput() {
+//        String check = scanner.nextLine();
+//        return Objects.equals(check, ENTER);
+//    }
 
-    public boolean exitInput() {
-        String check = scanner.nextLine();
-        return Objects.equals(check, ENTER);
+    public String inputCommand() {
+        return scanner.nextLine().trim();
     }
 
     public String inputPython() {
