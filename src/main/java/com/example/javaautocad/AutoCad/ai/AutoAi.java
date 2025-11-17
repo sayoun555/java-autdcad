@@ -1,8 +1,10 @@
 package com.example.javaautocad.AutoCad.ai;
 
 import com.example.javaautocad.AutoCad.config.EnvConfig;
+import com.example.javaautocad.AutoCad.domain.EntityStatistics;
 import com.example.javaautocad.AutoCad.domain.Lines;
 import com.example.javaautocad.AutoCad.dto.AiDto;
+import com.example.javaautocad.AutoCad.dto.LineStatisticsDto;
 import com.example.javaautocad.AutoCad.dto.MessageDto;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
 import com.example.javaautocad.AutoCad.parser.AutoParser;
@@ -32,6 +34,10 @@ public class AutoAi {
         } catch (Exception e) {
             throw new IllegalArgumentException(ErrorMessage.FILE_ERROR.getMessage());
         }
+    }
+
+    public EntityStatistics entityParser() {
+        return new EntityStatistics(autoParser.)
     }
 
     private Lines parser() {

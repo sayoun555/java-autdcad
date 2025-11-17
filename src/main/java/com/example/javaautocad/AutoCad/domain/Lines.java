@@ -1,6 +1,6 @@
 package com.example.javaautocad.AutoCad.domain;
 
-import com.example.javaautocad.AutoCad.dto.StatisticsDto;
+import com.example.javaautocad.AutoCad.dto.LineStatisticsDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class Lines {
         return list;
     }
 
-    public StatisticsDto lineDelivery() {
+    public LineStatisticsDto lineDelivery() {
         boolean valid = true;
         double avg = lineAverage();
         double var = lineVariance();
@@ -73,7 +73,7 @@ public class Lines {
         if (lineList.isEmpty() || avg == 0) {
             valid = false;
         }
-        return new StatisticsDto(avg, var, std, homo, valid, list);
+        return new LineStatisticsDto(avg, var, std, homo, valid, list);
     }
 
     public List<Line> getLineList() {

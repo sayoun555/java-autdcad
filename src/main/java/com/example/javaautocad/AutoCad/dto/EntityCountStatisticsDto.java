@@ -1,28 +1,18 @@
-package com.example.javaautocad.AutoCad.domain;
+package com.example.javaautocad.AutoCad.dto;
 
-public class EntityStatistics {
+public class EntityCountStatisticsDto {
     private final int lineCount;
     private final int arcCount;
     private final int circleCount;
     private final int ellipseCount;
+    private final double curve;
 
-    public EntityStatistics(int lineCount, int arcCount, int circleCount, int ellipseCount) {
+    public EntityCountStatisticsDto(int lineCount, int arcCount, int circleCount, int ellipseCount, double curve) {
         this.lineCount = lineCount;
         this.arcCount = arcCount;
         this.circleCount = circleCount;
         this.ellipseCount = ellipseCount;
-    }
-
-    public int totalEntities() {
-        return lineCount + arcCount + circleCount + ellipseCount;
-    }
-
-    public double curve() {
-        if (totalEntities() == 0) {
-            return 0.0;
-        }
-        int totalCurves = arcCount + circleCount + ellipseCount;
-        return (double) totalCurves / totalEntities();
+        this.curve = curve;
     }
 
     public int getLineCount() {
@@ -41,4 +31,7 @@ public class EntityStatistics {
         return ellipseCount;
     }
 
+    public double getCurve() {
+        return curve;
+    }
 }

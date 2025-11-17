@@ -109,6 +109,7 @@ public class AutoParser {
         }
     }
 
+    public List<>
     public EntityStatistics parseStatistics(String file) {
         Map<String, Integer> counts = countEntities(file);
         return new EntityStatistics(counts.getOrDefault(LINE, 0), counts.getOrDefault(ARC, 0), counts.getOrDefault(CIRCLE, 0), counts.getOrDefault(ELLIPSE, 0));

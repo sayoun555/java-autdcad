@@ -1,6 +1,7 @@
 package com.example.javaautocad.AutoCad.ai;
 
-import com.example.javaautocad.AutoCad.dto.StatisticsDto;
+import com.example.javaautocad.AutoCad.dto.EntityCountStatisticsDto;
+import com.example.javaautocad.AutoCad.dto.LineStatisticsDto;
 
 public class AiPrompt {
     private final String CONTEXT_MAIN = "[CONTEXT]";
@@ -9,23 +10,23 @@ public class AiPrompt {
     private final String DXF_CONTENT_DOMAIN = "[DXF CONTENT]";
     private final String EMPTY = "\n";
     private final String STANDARD = "결과는 설계의 프로파일 곡률, 내부 구조(Construction), 안정성, 대칭성, 코너링 적합성을 기준으로 분석하고,\n" +
-            "필요시 개선 방안을 3가지 이상으로 제시하세요";
+            "필요시 개선 방안 수치와 개선 방안을 3가지 이상 제시하세요";
     private final String CONTEXT_DXF = "아래는 도면의 JSON 일부입니다. 구조를 참고하여 판단하세요.";
     private final String VALIDATION = "데이터 유효성 낮음—보수적으로 판단";
     private final String ENTITIES = "ENTITIES 우선";
 
-    public String aiPromptBuilder(String newFile, StatisticsDto statisticsDto) {
+    public String aiPromptBuilder(String newFile, LineStatisticsDto lineStatisticsDto, EntityCountStatisticsDto entityCountStatisticsDto) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(CONTEXT_MAIN).append(EMPTY);
         stringBuilder.append(CONTEXT).append(EMPTY);
         stringBuilder.append(STANDARD).append(EMPTY);
         stringBuilder.append(STATISTICS).append(EMPTY);
-        stringBuilder.append("평균: ").append(statisticsDto.getLineAverage()).append(EMPTY);
-        stringBuilder.append("분산: ").append(statisticsDto.getLineVariance()).append(EMPTY);
-        stringBuilder.append("표준편차: ").append(statisticsDto.getLineStdDeviation()).append(EMPTY);
-        stringBuilder.append("균일도: ").append(statisticsDto.getLineHomogeneity()).append(EMPTY);
-        stringBuilder.append("유효성: ").append(statisticsDto.isValid()).append(EMPTY);
-        if (!statisticsDto.isValid()) {
+        stringBuilder.append("평균: ").append(lineStatisticsDto.getLineAverage()).append(EMPTY);
+        stringBuilder.append("분산: ").append(lineStatisticsDto.getLineVariance()).append(EMPTY);
+        stringBuilder.append("표준편차: ").append(lineStatisticsDto.getLineStdDeviation()).append(EMPTY);
+        stringBuilder.append("균일도: ").append(lineStatisticsDto.getLineHomogeneity()).append(EMPTY);
+        stringBuilder.append("유효성: ").append(lineStatisticsDto.isValid()).append(EMPTY);
+        if (!lineStatisticsDto.isValid()) {
             stringBuilder.append(VALIDATION).append(EMPTY);
         }
         stringBuilder.append(DXF_CONTENT_DOMAIN).append(EMPTY);
