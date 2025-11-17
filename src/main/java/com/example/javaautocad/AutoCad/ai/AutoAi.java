@@ -28,8 +28,8 @@ public class AutoAi {
 
     private void fileIo(Path path) {
         try {
-            fileResult =  Files.readString(path);
-        }catch (Exception e) {
+            fileResult = Files.readString(path);
+        } catch (Exception e) {
             throw new IllegalArgumentException(ErrorMessage.FILE_ERROR.getMessage());
         }
     }

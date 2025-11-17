@@ -12,7 +12,10 @@ public enum ErrorMessage {
     CONVERT_ERROR("[ERROR] dxf 변환 실패"),
     FILE_ERROR("[ERROR] 파일 불러오기 실패"),
     ENV_ERROR("[ERROR] 설정 저장하기 실패"),
-    CHOICES_ERROR("[ERROR] choices 가 없습니다.");
+    CHOICES_ERROR("[ERROR] choices 가 없습니다."),
+    ARC_ERROR("[ERROR] ARC 파싱 실패"),
+    CIRCLES_ERROR("[ERROR] CIRCLES 파싱 실패");
+
 
     private final String message;
 

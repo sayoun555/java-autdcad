@@ -10,13 +10,14 @@ public class Arc {
         this.point = point;
         this.radius = radius;
         this.startAngle = startAngle;
-        this. endAngle = endAngle;
+        this.endAngle = endAngle;
     }
 
     public double arcLength() {
         double angleRange = Math.abs(endAngle - startAngle);
         return radius * Math.toRadians(angleRange);
     }
+
     public double curvatuer() {
         return 1.0 / radius;
     }
