@@ -8,11 +8,9 @@ public class AiPrompt {
     private final String STATISTICS = "[STATISTICS]";
     private final String DXF_CONTENT_DOMAIN = "[DXF CONTENT]";
     private final String EMPTY = "\n";
-    private final String STANDARD = "결과는 설계의 프로파일 곡률, 모든 통계, 내부 구조(Construction), 안정성, 대칭성, 코너링 적합성을 기준으로 분석하고,\n" +
-            "필요시 개선 방안의 명확한 수치와 명확하고 구체적이면서 정확한 개선 방안을 4가지 이상 제시하세요";
+    private final String STANDARD = "결과는 설계의 프로파일을 최우선으로 생각하고 , 곡률, 모든 통계, 내부 구조(Construction), 안정성, 대칭성, 코너링 적합성을 기준으로 분석하고,\n" +
+            "목표가 아닌 구체적 개선 방안과 구체적인 수치를 통해 정확하고 구체적인 개선 방안을 전문적으로 5가지 이상 제시하세요";
     private final String CONTEXT_DXF = "아래는 도면의 JSON 일부입니다. 구조를 참고하여 판단하세요.";
-    private final String VALIDATION_LINE = "line 데이터 유효성 낮음—보수적으로 판단";
-    private final String VALIDATION_ARC = "arc 데이터 유효성 낮음—보수적으로 판단";
     private final String VALIDATION_CI = "circle 데이터 유효성 낮음—보수적으로 판단";
     private final String VALIDATION_ELL = "ellipse 데이터 유효성 낮음—보수적으로 판단";
     private final String ENTITIES = "ENTITIES 우선";
@@ -35,18 +33,12 @@ public class AiPrompt {
             stringBuilder.append("균일도: ").append(lineStatisticsDto.getLineHomogeneity()).append(EMPTY);
             stringBuilder.append("유효성: ").append(lineStatisticsDto.isValid()).append(EMPTY);
         }
-        if (!lineStatisticsDto.isValid()) {
-            stringBuilder.append(VALIDATION_LINE);
-        }
         if (arcStatisticsDto.isValid()) {
             stringBuilder.append(EMPTY).append("[호(Arc) 통계]").append(EMPTY);
             stringBuilder.append("평균 반지름: ").append(arcStatisticsDto.getAverageRadius()).append(EMPTY);
             stringBuilder.append("평균 곡률: ").append(arcStatisticsDto.getAverageCurvature()).append(EMPTY);
             stringBuilder.append("평균 호 길이: ").append(arcStatisticsDto.getAverageArcLength()).append(EMPTY);
             stringBuilder.append("개수: ").append(arcStatisticsDto.getCount()).append(EMPTY);
-        }
-        if (!arcStatisticsDto.isValid()) {
-            stringBuilder.append(VALIDATION_ARC);
         }
         if (circleStatisticsDto.isValid()) {
             stringBuilder.append(EMPTY).append("[원(Circle) 통계]").append(EMPTY);
@@ -79,9 +71,7 @@ public class AiPrompt {
         stringBuilder.append(DXF_CONTENT_DOMAIN).append(EMPTY);
         stringBuilder.append(CONTEXT_DXF).append(EMPTY);
         stringBuilder.append(ENTITIES).append(EMPTY);
-
-        int limit = Math.min(10000, newFile.length());
-        stringBuilder.append(newFile, 0, limit);
+        stringBuilder.append(newFile);
         return stringBuilder.toString();
     }
 }
