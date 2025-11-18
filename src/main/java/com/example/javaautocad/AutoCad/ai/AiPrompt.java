@@ -8,10 +8,13 @@ public class AiPrompt {
     private final String STATISTICS = "[STATISTICS]";
     private final String DXF_CONTENT_DOMAIN = "[DXF CONTENT]";
     private final String EMPTY = "\n";
-    private final String STANDARD = "결과는 설계의 프로파일 곡률, 내부 구조(Construction), 안정성, 대칭성, 코너링 적합성을 기준으로 분석하고,\n" +
-            "필요시 개선 방안 수치와 개선 방안을 3가지 이상 제시하세요";
+    private final String STANDARD = "결과는 설계의 프로파일 곡률, 모든 통계, 내부 구조(Construction), 안정성, 대칭성, 코너링 적합성을 기준으로 분석하고,\n" +
+            "필요시 개선 방안의 명확한 수치와 명확하고 구체적이면서 정확한 개선 방안을 4가지 이상 제시하세요";
     private final String CONTEXT_DXF = "아래는 도면의 JSON 일부입니다. 구조를 참고하여 판단하세요.";
-    private final String VALIDATION = "데이터 유효성 낮음—보수적으로 판단";
+    private final String VALIDATION_LINE = "line 데이터 유효성 낮음—보수적으로 판단";
+    private final String VALIDATION_ARC = "arc 데이터 유효성 낮음—보수적으로 판단";
+    private final String VALIDATION_CI = "circle 데이터 유효성 낮음—보수적으로 판단";
+    private final String VALIDATION_ELL = "ellipse 데이터 유효성 낮음—보수적으로 판단";
     private final String ENTITIES = "ENTITIES 우선";
 
     public String aiPromptBuilder(String newFile,
@@ -32,6 +35,9 @@ public class AiPrompt {
             stringBuilder.append("균일도: ").append(lineStatisticsDto.getLineHomogeneity()).append(EMPTY);
             stringBuilder.append("유효성: ").append(lineStatisticsDto.isValid()).append(EMPTY);
         }
+        if (!lineStatisticsDto.isValid()) {
+            stringBuilder.append(VALIDATION_LINE);
+        }
         if (arcStatisticsDto.isValid()) {
             stringBuilder.append(EMPTY).append("[호(Arc) 통계]").append(EMPTY);
             stringBuilder.append("평균 반지름: ").append(arcStatisticsDto.getAverageRadius()).append(EMPTY);
@@ -39,7 +45,9 @@ public class AiPrompt {
             stringBuilder.append("평균 호 길이: ").append(arcStatisticsDto.getAverageArcLength()).append(EMPTY);
             stringBuilder.append("개수: ").append(arcStatisticsDto.getCount()).append(EMPTY);
         }
-
+        if (!arcStatisticsDto.isValid()) {
+            stringBuilder.append(VALIDATION_ARC);
+        }
         if (circleStatisticsDto.isValid()) {
             stringBuilder.append(EMPTY).append("[원(Circle) 통계]").append(EMPTY);
             stringBuilder.append("평균 반지름: ").append(circleStatisticsDto.getAverageRadius()).append(EMPTY);
@@ -47,7 +55,9 @@ public class AiPrompt {
             stringBuilder.append("평균 둘레: ").append(circleStatisticsDto.getAverageCircumference()).append(EMPTY);
             stringBuilder.append("개수: ").append(circleStatisticsDto.getCount()).append(EMPTY);
         }
-
+        if (!circleStatisticsDto.isValid()) {
+            stringBuilder.append(VALIDATION_CI);
+        }
         if (ellipseStatisticsDto.isValid()) {
             stringBuilder.append(EMPTY).append("[타원(Ellipse) 통계]").append(EMPTY);
             stringBuilder.append("평균 장축 반지름: ").append(ellipseStatisticsDto.getAverageMajorRadius()).append(EMPTY);
@@ -55,6 +65,9 @@ public class AiPrompt {
             stringBuilder.append("평균 편심률: ").append(ellipseStatisticsDto.getAverageEccentricity()).append(EMPTY);
             stringBuilder.append("평균 곡률: ").append(ellipseStatisticsDto.getAverageCurvature()).append(EMPTY);
             stringBuilder.append("개수: ").append(ellipseStatisticsDto.getCount()).append(EMPTY);
+        }
+        if (!ellipseStatisticsDto.isValid()) {
+            stringBuilder.append(VALIDATION_ELL);
         }
         stringBuilder.append(EMPTY).append("[엔티티 개수]").append(EMPTY);
         stringBuilder.append("Line: ").append(entityCountStatisticsDto.getLineCount()).append(EMPTY);

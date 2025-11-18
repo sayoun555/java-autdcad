@@ -60,7 +60,6 @@ public class AutoAi {
         CircleStatisticsDto circleStats = circleParser().ciseclsDelivery();
         EllipseStatisticsDto ellipseStats = ellipseParser().ellipesDelivery();
         EntityCountStatisticsDto entityStats = entityParser().entityDelivery();
-
         return aiPrompt.aiPromptBuilder(
                 fileResult,
                 lineStats,

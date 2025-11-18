@@ -42,12 +42,10 @@ public class FileWatcher {
         if (!isModify(event)) {
             return;
         }
-
         Path changedFile = filePath(event);
         if (!isDxfFile(changedFile)) {
             return;
         }
-
         analyzeDisplay(changedFile);
     }
 

@@ -30,7 +30,7 @@ public class EnvConfig {
                         String[] parts = line.split("=", 2);
                         env.put(parts[0].trim(), parts[1].trim());
                     });
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return env;

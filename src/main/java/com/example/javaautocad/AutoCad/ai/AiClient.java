@@ -51,7 +51,6 @@ public class AiClient {
     public String aiParser(AutoAi ai, AiDto dto) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-
             String body = aiResponse(ai, dto).body();
             JsonNode node = objectMapper.readTree(body);
             if (!node.has(CHOC) || node.get(CHOC).isEmpty()) {

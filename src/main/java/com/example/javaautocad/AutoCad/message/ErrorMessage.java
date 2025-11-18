@@ -15,7 +15,22 @@ public enum ErrorMessage {
     CHOICES_ERROR("[ERROR] choices 가 없습니다."),
     ARC_ERROR("[ERROR] ARC 파싱 실패"),
     CIRCLES_ERROR("[ERROR] CIRCLES 파싱 실패"),
-    ELLIPSE_ERROR("[ERROR] ELLIPSE 파싱 실패");
+    LINE_ERROR("[ERROR] LINE 파싱 실패"),
+    COUNT_ERROR("[ERROR] COUNT 파싱 실패"),
+    ELLIPSE_ERROR("[ERROR] ELLIPSE 파싱 실패"),
+    EMPTY_PATH("폴더 경로가 비어있습니다."),
+    FOLDER_NOT_FOUND("폴더를 찾을 수 없습니다."),
+    NOT_DIRECTORY("디렉토리가 아닙니다."),
+    EMPTY_PYTHON_PATH("Python 경로가 비어있습니다."),
+    PYTHON_NOT_FOUND("Python 실행 파일을 찾을 수 없습니다."),
+    PYTHON_NOT_EXECUTABLE("Python 파일이 실행 가능하지 않습니다."),
+    EMPTY_SCRIPT_PATH("스크립트 경로가 비어있습니다."),
+    SCRIPT_NOT_FOUND("스크립트 파일을 찾을 수 없습니다."),
+    INVALID_SCRIPT_EXTENSION("스크립트 파일은 .py 확장자여야 합니다."),
+    EMPTY_API_KEY("API 키가 비어있습니다."),
+    INVALID_API_KEY_LENGTH("API 키 길이가 유효하지 않습니다."),
+    EMPTY_INPUT("입력값이 비어있습니다."),
+    INVALID_YES_NO("y 또는 n을 입력해주세요.");
 
 
     private final String message;
