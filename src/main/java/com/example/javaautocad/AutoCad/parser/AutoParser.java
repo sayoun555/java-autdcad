@@ -151,25 +151,15 @@ public class AutoParser {
         Point center = point(node.get(CENTER));
         JsonNode majorAxis = node.get(MAJOR_AXIS);
         double ratio = node.get(RATIO).asDouble();
-
-        double majorRadius = magnitude(
+        return Ellipse.ellipse(
+                center,
                 majorAxis.get(0).asDouble(),
-                majorAxis.get(1).asDouble()
-        );
-        double minorRadius = majorRadius * ratio;
-        double rotation = Math.atan2(
                 majorAxis.get(1).asDouble(),
-                majorAxis.get(0).asDouble()
+                ratio
         );
-
-        return new Ellipse(center, majorRadius, minorRadius, rotation);
     }
 
     private Point point(JsonNode node) {
         return new Point(node.get(0).asDouble(), node.get(1).asDouble());
-    }
-
-    private double magnitude(double x, double y) {
-        return Math.sqrt(x * x + y * y);
     }
 }

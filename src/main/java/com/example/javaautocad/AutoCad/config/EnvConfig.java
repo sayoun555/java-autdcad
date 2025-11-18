@@ -30,8 +30,8 @@ public class EnvConfig {
                         String[] parts = line.split("=", 2);
                         env.put(parts[0].trim(), parts[1].trim());
                     });
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            throw new IllegalArgumentException(ErrorMessage.ENV_ERROR_LOAD.getMessage());
         }
         return env;
     }

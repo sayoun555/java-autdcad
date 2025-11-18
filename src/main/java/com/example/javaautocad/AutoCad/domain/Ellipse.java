@@ -13,6 +13,17 @@ public class Ellipse {
         this.rotation = rotation;
     }
 
+    public static Ellipse ellipse(Point center, double majorX, double majorY, double ratio) {
+        double majorRadius = magnitude(majorX, majorY);
+        double minorRadius = majorRadius * ratio;
+        double rotation = Math.atan2(majorY, majorX);
+        return new Ellipse(center, majorRadius, minorRadius, rotation);
+    }
+
+    private static double magnitude(double x, double y) {
+        return Math.sqrt(x * x + y * y);
+    }
+
     public double eccentricity() {
         if (majorRadius == 0) {
             return 0.0;

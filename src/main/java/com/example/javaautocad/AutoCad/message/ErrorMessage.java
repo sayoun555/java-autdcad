@@ -30,7 +30,8 @@ public enum ErrorMessage {
     EMPTY_API_KEY("API 키가 비어있습니다."),
     INVALID_API_KEY_LENGTH("API 키 길이가 유효하지 않습니다."),
     EMPTY_INPUT("입력값이 비어있습니다."),
-    INVALID_YES_NO("y 또는 n을 입력해주세요.");
+    INVALID_YES_NO("y 또는 n을 입력해주세요."),
+    ENV_ERROR_LOAD("env 파일 불러오기 실패 했씁니다.");
 
 
     private final String message;
