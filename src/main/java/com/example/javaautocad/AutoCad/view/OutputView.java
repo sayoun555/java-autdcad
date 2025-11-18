@@ -13,10 +13,15 @@ public class OutputView {
     private final String OUTPUT_SCRIPT = "DXF 스크립트 경로를 입력해주세요. ";
     private final String CONFIG = "변경 하시겠습니까? (y/n)";
     private final String KEY = "open api key를 입력해주세요.";
+    private final String REJOIN = "설정이 끝났습니다. 프로그램을 다시 켜주세요.";
     private final String ERROR = "[ERROR]";
 
     public void result(String outPut) {
         System.out.println(outPut);
+    }
+
+    public void reJoin() {
+        System.out.println(REJOIN);
     }
 
     public void exitView() {

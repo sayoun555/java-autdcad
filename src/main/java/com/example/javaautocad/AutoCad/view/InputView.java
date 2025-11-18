@@ -9,19 +9,15 @@ public class InputView {
         return scanner.nextLine().trim();
     }
 
-    public String inputPython() {
+    public String inputPythonView() {
         return scanner.nextLine().trim();
     }
 
-    public String inputScript() {
+    public String inputScriptView() {
         return scanner.nextLine().trim();
     }
 
-    public boolean askConfig() {
-        return scanner.nextLine().trim().equalsIgnoreCase("y");
-    }
-
-    public String inputKey() {
+    public String inputKeyView() {
         return scanner.nextLine().trim();
     }
 }

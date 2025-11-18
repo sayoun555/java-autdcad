@@ -60,5 +60,6 @@ public class EnvConfig {
         } catch (IOException e) {
             throw new IllegalArgumentException(ErrorMessage.ENV_ERROR.getMessage());
         }
+        this.envMap = loadEnv();
     }
 }

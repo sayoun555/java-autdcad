@@ -38,10 +38,11 @@ public class AutoCadController {
         }
     }
 
-    private void envSetup() {
+    private boolean envSetup() {
         if (!envConfig.hassConfig()) {
             newConfig();
-            return;
+            outputView.reJoin();
+            return false;
         }
 
         outputView.config(envConfig.getPython(), envConfig.getScript());
@@ -51,30 +52,32 @@ public class AutoCadController {
             try {
                 String input = inputView.inputCommand();
                 validator.validateInput(input);
-
                 if (input.trim().equalsIgnoreCase("y")) {
                     newConfig();
                     outputView.configUpdate();
+                    outputView.reJoin();
+                    return false;
                 }
                 break;
             } catch (IllegalArgumentException e) {
                 outputView.errorMessage(e.getMessage());
             }
         }
+        return true;
     }
 
     private void newConfig() {
-        String python = inputPythonWithValidation();
-        String script = inputScriptWithValidation();
-        String key = inputKeyWithValidation();
+        String python = inputPython();
+        String script = inputScript();
+        String key = inputKey();
         envConfig.save(python, script, key);
     }
 
-    private String inputPythonWithValidation() {
+    private String inputPython() {
         while (true) {
             try {
                 outputView.outputPython();
-                String python = inputView.inputPython();
+                String python = inputView.inputPythonView();
                 validator.validatePython(python);
                 return python;
             } catch (IllegalArgumentException e) {
@@ -83,11 +86,11 @@ public class AutoCadController {
         }
     }
 
-    private String inputScriptWithValidation() {
+    private String inputScript() {
         while (true) {
             try {
                 outputView.outputScript();
-                String script = inputView.inputScript();
+                String script = inputView.inputScriptView();
                 validator.validateScript(script);
                 return script;
             } catch (IllegalArgumentException e) {
@@ -96,11 +99,11 @@ public class AutoCadController {
         }
     }
 
-    private String inputKeyWithValidation() {
+    private String inputKey() {
         while (true) {
             try {
                 outputView.keyOutput();
-                String key = inputView.inputKey();
+                String key = inputView.inputKeyView();
                 validator.validateApiKey(key);
                 return key;
             } catch (IllegalArgumentException e) {
@@ -122,7 +125,9 @@ public class AutoCadController {
     }
 
     public void run() {
-        envSetup();
+        if(!envSetup()) {
+            return;
+        }
         mainLoop();
     }
 }
