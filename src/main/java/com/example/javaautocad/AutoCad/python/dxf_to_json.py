@@ -7,9 +7,9 @@ TIRE_LAYERS = {'도면층3', 'OUT', 'Layer0$C$L0'}
 EXCLUDE_TYPES = {'DIMENSION', 'TEXT', 'MTEXT', 'LEADER', 'HATCH', 'INSERT', 'POINT'}
 
 SAMPLES_CONFIG = {
-    'ARC': 280,
-    'ELLIPSE': 80,
-    'CIRCLE': 70,
+    'ARC': 1500,
+    'ELLIPSE': 200,
+    'CIRCLE': 100,
     'LINE': 1000
 }
 

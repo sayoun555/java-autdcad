@@ -61,6 +61,10 @@ public class FileWatcher {
         return filePath.toString().endsWith(".dxf");
     }
 
+    public void tireType(String type) {
+        autoMeasureService.tireType(type);
+    }
+
     private void analyzeDisplay(Path dxf) {
         String result = autoMeasureService.analyzeDxf(dxf);
         outputView.result(result);

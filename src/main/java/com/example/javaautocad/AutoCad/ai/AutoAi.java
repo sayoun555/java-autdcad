@@ -1,6 +1,7 @@
 package com.example.javaautocad.AutoCad.ai;
 
 import com.example.javaautocad.AutoCad.config.EnvConfig;
+import com.example.javaautocad.AutoCad.controller.AutoCadController;
 import com.example.javaautocad.AutoCad.domain.*;
 import com.example.javaautocad.AutoCad.dto.*;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
@@ -15,9 +16,8 @@ public class AutoAi {
     private final String USER = "user";
     private final AiClient aiClient;
     private final AutoParser autoParser;
-    private String fileResult;
     private final EnvConfig envConfig;
-
+    private String userInput;
 
     public AutoAi(AutoParser autoParser, EnvConfig envConfig) {
         this.aiClient = new AiClient();
@@ -25,55 +25,59 @@ public class AutoAi {
         this.envConfig = envConfig;
     }
 
-    private void fileIo(Path path) {
+    public void tireType(String type) {
+        this.userInput = type;
+    }
+    private String fileIo(Path path) {
         try {
-            fileResult = Files.readString(path);
+            return Files.readString(path);
         } catch (Exception e) {
             throw new IllegalArgumentException(ErrorMessage.FILE_ERROR.getMessage());
         }
     }
 
-    private Lines lineParser() {
+    private Lines lineParser(String fileResult) {
         return new Lines(autoParser.lineParser(fileResult));
     }
 
-    private Arcs arcParser() {
+    private Arcs arcParser(String fileResult) {
         return new Arcs(autoParser.arcParser(fileResult));
     }
 
-    private Circles circleParser() {
+    private Circles circleParser(String fileResult) {
         return new Circles(autoParser.circlesParser(fileResult));
     }
 
-    private Ellipses ellipseParser() {
+    private Ellipses ellipseParser(String fileResult) {
         return new Ellipses(autoParser.ellipseParser(fileResult));
     }
 
-    private EntityStatistics entityParser() {
+    private EntityStatistics entityParser(String fileResult) {
         return autoParser.parseStatistics(fileResult);
     }
 
-    private String promptBuild() {
+    private String promptBuild(String fileResult) {
         AiPrompt aiPrompt = new AiPrompt();
-        LineStatisticsDto lineStats = lineParser().lineDelivery();
-        ArcStatisticsDto arcStats = arcParser().aecDelivery();
-        CircleStatisticsDto circleStats = circleParser().ciseclsDelivery();
-        EllipseStatisticsDto ellipseStats = ellipseParser().ellipesDelivery();
-        EntityCountStatisticsDto entityStats = entityParser().entityDelivery();
+        LineStatisticsDto lineStats = lineParser(fileResult).lineDelivery();
+        ArcStatisticsDto arcStats = arcParser(fileResult).aecDelivery();
+        CircleStatisticsDto circleStats = circleParser(fileResult).ciseclsDelivery();
+        EllipseStatisticsDto ellipseStats = ellipseParser(fileResult).ellipesDelivery();
+        EntityCountStatisticsDto entityStats = entityParser(fileResult).entityDelivery();
         return aiPrompt.aiPromptBuilder(
                 fileResult,
                 lineStats,
                 entityStats,
                 circleStats,
                 arcStats,
-                ellipseStats
+                ellipseStats,
+                userInput
         );
     }
 
     public String analyze(Path path) {
-        fileIo(path);
+        String fileResult = fileIo(path);
         List<MessageDto> messageDtos = new ArrayList<>();
-        messageDtos.add(new MessageDto(USER, promptBuild()));
+        messageDtos.add(new MessageDto(USER, promptBuild(fileResult)));
         AiDto aiDto = new AiDto(messageDtos, 0.7);
         return aiClient.aiParser(this, aiDto);
     }

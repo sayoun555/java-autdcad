@@ -15,6 +15,7 @@ public class OutputView {
     private final String KEY = "open api key를 입력해주세요.";
     private final String REJOIN = "설정이 끝났습니다. 프로그램을 다시 켜주세요.";
     private final String ERROR = "[ERROR]";
+    private final String IF = "타이어 종류를 적어주세요";
 
     public void result(String outPut) {
         System.out.println(outPut);
@@ -63,6 +64,10 @@ public class OutputView {
 
     public void errorMessage(String message) {
         System.out.println(ERROR + message);
+    }
+
+    public void outputIf() {
+        System.out.println(IF);
     }
 
 }

@@ -18,4 +18,9 @@ public class AutoMeasureServiceImpl implements AutoMeasureService {
         Path jsonPath = dxfConverter.convert(dxf);
         return ai.analyze(jsonPath);
     }
+
+    public void tireType(String type) {
+        ai.tireType(type);
+    }
+
 }

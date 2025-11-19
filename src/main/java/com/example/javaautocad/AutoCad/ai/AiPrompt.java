@@ -26,6 +26,10 @@ public class AiPrompt {
             """;
 
     private final String STANDARD = """
+            You analyze the items listed below, including the extended sections \s
+            (Safety & Cornering Tendency Interpretation, and Environment-Based Structural Implication). \s
+            All analysis must be strictly pattern-based and numerical-evidence-based.
+            
             You analyze only the items listed below.
             All analysis must be strictly pattern-based and numerical-evidence-based.
             
@@ -77,6 +81,34 @@ public class AiPrompt {
             • No maximum/minimum/range inference.
             • No request for additional data.
             • Do not mention missing values.
+            
+            Environment-Based Structural Implication (Allowed)
+            
+            Based strictly on the numerical tendencies found in STATISTICS, you may describe
+            how the structural characteristics could behave under different environmental
+            conditions. These statements must remain general, conditional, and grounded in
+            the numeric patterns.
+            
+            You may describe implications such as:
+            • “A more line-dominant structure may show steadier tendencies on straight roads.”
+            • “Higher-curvature segments may show more responsive tendencies on tighter paths.”
+            • “More uniform curvature may imply predictable tendencies on uneven surfaces.”
+            • “Lower curvature may relate to more stable tendencies in wet conditions.”
+            
+            Allowed environmental factors:
+            • Wet or rainy conditions
+            • Dry conditions
+            • Rough or uneven road surfaces
+            • Mountain roads (curvy terrains)
+            • High-speed vs low-speed tendencies
+            • Temperature effects (general structural implications only)
+            
+            Strict Rules:
+            • Do NOT predict actual performance.
+            • Do NOT assign safety ratings, risk levels, or real-world handling outcomes.
+            • Do NOT mention accidents, danger, failures, or user-specific riding behavior.
+            • Only describe tendencies implied by numeric curvature and structural proportions.
+            • All environmental implications must be conditional, such as “may show,” “could indicate,” or “might imply.”
             """;
 
     private final String STATISTICS = "[STATISTICS]";
@@ -99,9 +131,11 @@ public class AiPrompt {
                                   EntityCountStatisticsDto entityCountStatisticsDto,
                                   CircleStatisticsDto circleStatisticsDto,
                                   ArcStatisticsDto arcStatisticsDto,
-                                  EllipseStatisticsDto ellipseStatisticsDto) {
+                                  EllipseStatisticsDto ellipseStatisticsDto,
+                                  String userInput) {
 
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(userInput);
         stringBuilder.append(CONTEXT_MAIN).append(EMPTY);
         stringBuilder.append(CONTEXT).append(EMPTY);
         stringBuilder.append(STANDARD).append(EMPTY);

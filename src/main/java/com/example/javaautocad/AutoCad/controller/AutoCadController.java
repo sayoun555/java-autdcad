@@ -22,13 +22,19 @@ public class AutoCadController {
         this.validator = new InputValidator();
     }
 
+    private String inputIf() {
+        outputView.outputIf();
+        return inputView.inputIfView();
+    }
+
     private void startWatcher() {
         while (true) {
             try {
                 outputView.inputFolderMessage();
                 String folder = inputView.inputCommand();
                 validator.validateFolder(folder);
-
+                String input = inputIf();
+                fileWatcher.tireType(input);
                 fileWatcher.start(folder);
                 outputView.exitStop();
                 break;
@@ -125,7 +131,7 @@ public class AutoCadController {
     }
 
     public void run() {
-        if(!envSetup()) {
+        if (!envSetup()) {
             return;
         }
         mainLoop();

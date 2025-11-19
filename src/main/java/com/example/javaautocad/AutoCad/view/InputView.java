@@ -20,4 +20,8 @@ public class InputView {
     public String inputKeyView() {
         return scanner.nextLine().trim();
     }
+
+    public String inputIfView() {
+        return scanner.nextLine();
+    }
 }
