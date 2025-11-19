@@ -10,22 +10,22 @@ SAMPLES_CONFIG = {
     'ARC': 280,
     'ELLIPSE': 80,
     'CIRCLE': 70,
-    'LINE': 150
+    'LINE': 1000
 }
 
 def sample_entities(entities):
     by_type = defaultdict(list)
     for entity in entities:
         by_type[entity['type']].append(entity)
-    
+
     sampled = []
     stats = {}
-    
+
     for etype, items in by_type.items():
         count = len(items)
         target = SAMPLES_CONFIG.get(etype, 50)
         sample_size = min(target, count)
-        
+
         if count <= sample_size:
             sampled.extend(items)
             stats[etype] = f"{count}/{count} (100.0%)"
@@ -34,13 +34,13 @@ def sample_entities(entities):
             indices = [int(i * step) for i in range(sample_size)]
             sampled.extend([items[i] for i in indices])
             stats[etype] = f"{sample_size}/{count} ({100*sample_size/count:.1f}%)"
-    
+
     return sampled, stats
 
 def parse_dxf(file_path):
     import os
     output_path = file_path.replace('.dxf', '.json')
-    
+
     doc = ezdxf.readfile(file_path)
     msp = doc.modelspace()
     entities = []
@@ -48,12 +48,12 @@ def parse_dxf(file_path):
     for e in msp:
         layer = e.dxf.layer if hasattr(e.dxf, 'layer') else '0'
         etype = e.dxftype()
-        
+
         if layer not in TIRE_LAYERS:
             continue
         if etype in EXCLUDE_TYPES:
             continue
-        
+
         if etype == "LINE":
             entities.append({
                 "type": "LINE",
@@ -61,7 +61,7 @@ def parse_dxf(file_path):
                 "start": [e.dxf.start.x, e.dxf.start.y],
                 "end": [e.dxf.end.x, e.dxf.end.y]
             })
-            
+
         elif etype == "ARC":
             entities.append({
                 "type": "ARC",
@@ -71,7 +71,7 @@ def parse_dxf(file_path):
                 "start_angle": e.dxf.start_angle,
                 "end_angle": e.dxf.end_angle
             })
-            
+
         elif etype == "CIRCLE":
             entities.append({
                 "type": "CIRCLE",
@@ -79,7 +79,7 @@ def parse_dxf(file_path):
                 "center": [e.dxf.center.x, e.dxf.center.y],
                 "radius": e.dxf.radius
             })
-            
+
         elif etype == "ELLIPSE":
             entities.append({
                 "type": "ELLIPSE",
@@ -90,7 +90,7 @@ def parse_dxf(file_path):
                 "start_param": e.dxf.start_param,
                 "end_param": e.dxf.end_param
             })
-            
+
         elif etype == "LWPOLYLINE":
             points = list(e.get_points('xy'))
             for i in range(len(points) - 1):
@@ -100,7 +100,7 @@ def parse_dxf(file_path):
                     "start": list(points[i]),
                     "end": list(points[i + 1])
                 })
-                
+
         elif etype == "POLYLINE":
             points = [[v.dxf.location.x, v.dxf.location.y] for v in e.vertices]
             for i in range(len(points) - 1):
@@ -110,16 +110,16 @@ def parse_dxf(file_path):
                     "start": points[i],
                     "end": points[i + 1]
                 })
-    
+
     sampled_entities, sample_stats = sample_entities(entities)
 
     layer_stats = {}
     type_stats = {}
-    
+
     for entity in entities:
         layer = entity['layer']
         etype = entity['type']
-        
+
         layer_stats[layer] = layer_stats.get(layer, 0) + 1
         type_stats[etype] = type_stats.get(etype, 0) + 1
 
