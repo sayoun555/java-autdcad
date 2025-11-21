@@ -20,9 +20,41 @@
 - [ ] .py파일 형태 여부 와 파이썬 실행 가능한지 확인
 - [ ] api key 최소 길이 이상인지 검증
 - [ ] api key 비어있는지 확인
-- [ ] .env 수정 여부에 y&n가 아니면 예외로 처리함
+- [ ] .env 수정 여부에 y&n가 아니면 예외로 처리
 
 ## 리펙터링 목록
 - [ ] 책임 분산
 - [ ] 고정 된 파일 입력 경로를 유저가 원하는 경로로 하기 위해 수정
 - [ ] 파싱 코드 메서드 분리
+
+
+AutoCad
+├── Application.java               # 실행기
+├── controller
+│   └── AutoCadController          # 전체 흐름 제어
+├── manager
+│   ├── FileWatcher                # 파일 감시 & 이벤트 처리
+│   └── DxfConverter               # Python DXF → JSON 변환
+├── ai
+│   ├── AutoAi                     # 분석 전체 orchestrator
+│   ├── AiClient                   # AI 호출
+│   └── AiPrompt                   # 프롬프트 구성
+├── parser
+│   └── AutoParser                 # JSON → 도메인 파싱
+├── domain
+│   ├── Point / Line / Arc ...     # 도메인 모델
+│   ├── Lines / Arcs ...           # 일급 컬렉션
+│   └── G1 / G1s                   # G1 연속성 도메인
+├── dto
+│   ├── 통계 DTO들                 # LineStatisticsDto 등
+│   └── AiDto                       # OpenAI 요청 구조
+├── service
+│   ├── AutoMeasureService          # 인터페이스
+│   └── AutoMeasureServiceImpl      # 분석 비즈니스 로직
+├── view
+│   ├── InputView                   # 사용자 입력
+│   ├── OutputView                  # 출력
+│   └── InputValidator              # 입력 검증
+└── config
+├── EnvConfig                   # .env 관리
+└── ControllerConfig            # DI 조립

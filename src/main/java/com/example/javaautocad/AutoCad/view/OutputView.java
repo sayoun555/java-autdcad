@@ -1,7 +1,5 @@
 package com.example.javaautocad.AutoCad.view;
 
-import java.nio.file.Files;
-
 public class OutputView {
     private final String EXIT = "종료 하겠습니다";
     private final String STOP = "프로그램을 종료하려면 stop을 적어주세요";
