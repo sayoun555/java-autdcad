@@ -12,4 +12,12 @@ public class Line {
     public double abLine() {
         return start.xyPoint(end);
     }
+
+    public Point getStart() {
+        return start;
+    }
+
+    public Point getEnd() {
+        return end;
+    }
 }

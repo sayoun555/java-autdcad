@@ -1,6 +1,8 @@
 package com.example.javaautocad.AutoCad.ai;
 
+import com.example.javaautocad.AutoCad.domain.G1;
 import com.example.javaautocad.AutoCad.dto.*;
+
 
 public class AiPrompt {
 
@@ -75,7 +77,6 @@ public class AiPrompt {
             
             Strict Prohibitions:
             • No left/right symmetry inference.
-            • No G1 continuity analysis.
             • No shoulder-zone interpretation.
             • No transition-zone interpretation.
             • No maximum/minimum/range inference.
@@ -125,6 +126,8 @@ public class AiPrompt {
             """;
 
     private final String EMPTY = "\n";
+    private final String G1 = "[G1 Continuity Raw Data]";
+    private final String G1RE = "This is raw tangent-difference data. You must not interpret continuity.";
 
     public String aiPromptBuilder(String newFile,
                                   LineStatisticsDto lineStatisticsDto,
@@ -132,8 +135,10 @@ public class AiPrompt {
                                   CircleStatisticsDto circleStatisticsDto,
                                   ArcStatisticsDto arcStatisticsDto,
                                   EllipseStatisticsDto ellipseStatisticsDto,
-                                  String userInput) {
+                                  String userInput,
+                                  G1 g1) {
 
+        G1Dto g1Dto = g1.g1Delivery();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(userInput);
         stringBuilder.append(CONTEXT_MAIN).append(EMPTY);
@@ -180,6 +185,11 @@ public class AiPrompt {
                 stringBuilder.append(VALIDATION_ELL);
             }
         }
+        stringBuilder.append(G1).append(EMPTY);
+        stringBuilder.append("Max Jump :").append(g1Dto.getMaxJump()).append(EMPTY);
+        stringBuilder.append("Avg Jump: ").append(g1Dto.getArgJump()).append(EMPTY);
+        stringBuilder.append("Break Count :").append(g1Dto.getBreakCount());
+        stringBuilder.append(G1RE).append(EMPTY);
         stringBuilder.append(EMPTY).append("[Entity Counts]").append(EMPTY);
         stringBuilder.append("Line: ").append(entityCountStatisticsDto.getLineCount()).append(EMPTY);
         stringBuilder.append("Arc: ").append(entityCountStatisticsDto.getArcCount()).append(EMPTY);

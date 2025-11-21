@@ -1,7 +1,6 @@
 package com.example.javaautocad.AutoCad.ai;
 
 import com.example.javaautocad.AutoCad.config.EnvConfig;
-import com.example.javaautocad.AutoCad.controller.AutoCadController;
 import com.example.javaautocad.AutoCad.domain.*;
 import com.example.javaautocad.AutoCad.dto.*;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
@@ -56,13 +55,24 @@ public class AutoAi {
         return autoParser.parseStatistics(fileResult);
     }
 
+    public G1 mixG1(Lines lines, Arcs arcs) {
+        List<Object> list = new ArrayList<>();
+        list.addAll(lines.getLineList());
+        list.addAll(arcs.getArcs());
+        G1s g1s = new G1s(list);
+        return new G1(g1s);
+    }
+
     private String promptBuild(String fileResult) {
         AiPrompt aiPrompt = new AiPrompt();
+        Lines lines = lineParser(fileResult);
+        Arcs arcs = arcParser(fileResult);
         LineStatisticsDto lineStats = lineParser(fileResult).lineDelivery();
         ArcStatisticsDto arcStats = arcParser(fileResult).aecDelivery();
         CircleStatisticsDto circleStats = circleParser(fileResult).ciseclsDelivery();
         EllipseStatisticsDto ellipseStats = ellipseParser(fileResult).ellipesDelivery();
         EntityCountStatisticsDto entityStats = entityParser(fileResult).entityDelivery();
+        G1 g1 = mixG1(lines, arcs);
         return aiPrompt.aiPromptBuilder(
                 fileResult,
                 lineStats,
@@ -70,7 +80,8 @@ public class AutoAi {
                 circleStats,
                 arcStats,
                 ellipseStats,
-                userInput
+                userInput,
+                g1
         );
     }
 

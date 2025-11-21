@@ -6,12 +6,7 @@ if not exist python-embedded\python.exe (
     exit /b 1
 )
 
-echo [2/5] Preparing files...
-if not exist build\libs\python mkdir build\libs\python
-copy src\main\java\com\example\javaautocad\AutoCad\python\dxf_to_json.py build\libs\python\ >nul
-if exist .env copy .env build\libs\ >nul
-
-echo [3/5] Building JAR...
+echo [2/5] Building JAR...
 call gradlew.bat clean bootJar
 if %errorlevel% neq 0 (
     echo Error: Build failed!
@@ -19,9 +14,23 @@ if %errorlevel% neq 0 (
     exit /b 1
 )
 
+echo [3/5] Preparing files...
+copy run.bat build\libs\
+echo PYTHON_PATH=runtime/python/python.exe > build\libs\.env
+echo SCRIPT_PATH=python/dxf_to_json.py >> build\libs\.env
+echo OPENAI_API_KEY= >> build\libs\.env
+echo Files copied successfully!
+
 echo [4/5] Packaging Python...
 if not exist build\libs\runtime mkdir build\libs\runtime
-xcopy /E /I /Y /Q python-embedded build\libs\runtime\python >nul
+echo Copying Python runtime (this may take a moment)...
+xcopy /E /I /Y python-embedded build\libs\runtime\python
+if %errorlevel% neq 0 (
+    echo Error: Failed to copy Python runtime!
+    pause
+    exit /b 1
+)
+echo Python runtime copied successfully!
 
 echo [5/5] Creating .exe (5-10 min)...
 
@@ -35,8 +44,7 @@ jpackage ^
   --app-version 1.0 ^
   --vendor "AutoCAD Application" ^
   --description "AutoCAD CLI - Standalone (Java + Python included)" ^
-  --java-options "-Xmx512m" ^
-  --resource-dir build/libs
+  --java-options "-Xmx512m"
 
 if %errorlevel% neq 0 (
     echo Error: jpackage failed! Check Java 21 JDK.
@@ -47,4 +55,7 @@ if %errorlevel% neq 0 (
 echo.
 echo Done! AutoCAD-1.0.exe created (100-150MB)
 echo Includes: Java + Python + ezdxf
+echo.
+echo IMPORTANT: After installation, run "run.bat" instead of "AutoCAD.exe"
+echo Location: C:\Program Files\AutoCAD\app\run.bat
 pause
