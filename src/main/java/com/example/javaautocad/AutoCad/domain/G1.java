@@ -50,8 +50,12 @@ public class G1 {
     }
 
     private double normalize(double deg) {
-        while (deg > 180) deg -= 360;
-        while (deg < -180) deg += 360;
+        while (deg > 180) {
+            deg -= 360;
+        }
+        while (deg < -180) {
+            deg += 360;
+        }
         return Math.abs(deg);
     }
 
@@ -70,7 +74,9 @@ public class G1 {
 
     private double avgJump() {
         List<Double> ang = tangent();
-        if (ang.size() < 2) return 0.0;
+        if (ang.size() < 2) {
+            return 0.0;
+        }
 
         double sum = 0.0;
         int count = 0;
