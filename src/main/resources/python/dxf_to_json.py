@@ -29,11 +29,12 @@ def sample_entities(entities):
         if count <= sample_size:
             sampled.extend(items)
             stats[etype] = f"{count}/{count} (100.0%)"
-        else:
-            step = count / sample_size
-            indices = [int(i * step) for i in range(sample_size)]
-            sampled.extend([items[i] for i in indices])
-            stats[etype] = f"{sample_size}/{count} ({100*sample_size/count:.1f}%)"
+            continue
+
+        step = count / sample_size
+        indices = [int(i * step) for i in range(sample_size)]
+        sampled.extend([items[i] for i in indices])
+        stats[etype] = f"{sample_size}/{count} ({100*sample_size/count:.1f}%)"
 
     return sampled, stats
 
@@ -61,8 +62,9 @@ def parse_dxf(file_path):
                 "start": [e.dxf.start.x, e.dxf.start.y],
                 "end": [e.dxf.end.x, e.dxf.end.y]
             })
+            continue
 
-        elif etype == "ARC":
+        if etype == "ARC":
             entities.append({
                 "type": "ARC",
                 "layer": layer,
@@ -71,16 +73,18 @@ def parse_dxf(file_path):
                 "start_angle": e.dxf.start_angle,
                 "end_angle": e.dxf.end_angle
             })
+            continue
 
-        elif etype == "CIRCLE":
+        if etype == "CIRCLE":
             entities.append({
                 "type": "CIRCLE",
                 "layer": layer,
                 "center": [e.dxf.center.x, e.dxf.center.y],
                 "radius": e.dxf.radius
             })
+            continue
 
-        elif etype == "ELLIPSE":
+        if etype == "ELLIPSE":
             entities.append({
                 "type": "ELLIPSE",
                 "layer": layer,
@@ -90,8 +94,9 @@ def parse_dxf(file_path):
                 "start_param": e.dxf.start_param,
                 "end_param": e.dxf.end_param
             })
+            continue
 
-        elif etype == "LWPOLYLINE":
+        if etype == "LWPOLYLINE":
             points = list(e.get_points('xy'))
             for i in range(len(points) - 1):
                 entities.append({
@@ -100,8 +105,9 @@ def parse_dxf(file_path):
                     "start": list(points[i]),
                     "end": list(points[i + 1])
                 })
+            continue
 
-        elif etype == "POLYLINE":
+        if etype == "POLYLINE":
             points = [[v.dxf.location.x, v.dxf.location.y] for v in e.vertices]
             for i in range(len(points) - 1):
                 entities.append({
