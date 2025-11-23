@@ -12,6 +12,16 @@ public class Lines {
         this.lineList = new ArrayList<>(lineList);
     }
 
+    public Lines filter(LayerFilter layerFilter) {
+        List<Line> filtered = new ArrayList<>();
+        for (Line line : lineList) {
+            if (layerFilter.matches(line)) {
+                filtered.add(line);
+            }
+        }
+        return new Lines(filtered);
+    }
+
     public double medianLength() {
         List<Double> y = new ArrayList<>();
         for (Line line : lineList) {

@@ -25,6 +25,7 @@ public class AutoParser {
     private final String ELLIPSE = "ELLIPSE";
     private final String MAJOR_AXIS = "major_axis";
     private final String RATIO = "ratio";
+    public static final String LAYER = "layer";
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -32,7 +33,6 @@ public class AutoParser {
         try {
             JsonNode jsonNode = parseJson(file);
             List<Line> lines = new ArrayList<>();
-
             for (JsonNode node : jsonNode) {
                 if (type(node, LINE)) {
                     lines.add(parseLine(node));
@@ -64,7 +64,6 @@ public class AutoParser {
         try {
             JsonNode jsonNode = parseJson(file);
             List<Circle> circles = new ArrayList<>();
-
             for (JsonNode node : jsonNode) {
                 if (type(node, CIRCLE)) {
                     circles.add(parseCircle(node));
@@ -80,7 +79,6 @@ public class AutoParser {
         try {
             JsonNode jsonNode = parseJson(file);
             List<Ellipse> ellipses = new ArrayList<>();
-
             for (JsonNode node : jsonNode) {
                 if (type(node, ELLIPSE)) {
                     ellipses.add(parseEllipse(node));
@@ -96,7 +94,6 @@ public class AutoParser {
         Map<String, Integer> map = new HashMap<>();
         try {
             JsonNode jsonNode = parseJson(file);
-
             for (JsonNode node : jsonNode) {
                 String type = node.get(TYPE).asText();
                 map.put(type, map.getOrDefault(type, 0) + 1);
@@ -128,9 +125,13 @@ public class AutoParser {
     private Line parseLine(JsonNode node) {
         JsonNode start = node.get(START);
         JsonNode end = node.get(END);
+        String layer = "0";
+        if (node.has(LAYER)) {
+            layer = node.get(LAYER).asText();
+        }
         Point startPoint = point(start);
         Point endPoint = point(end);
-        return new Line(startPoint, endPoint);
+        return new Line(startPoint, endPoint, layer);
     }
 
     private Arc parseArc(JsonNode node) {
@@ -138,24 +139,37 @@ public class AutoParser {
         double radius = node.get(RADIUS).asDouble();
         double startAngle = node.get(START_ANGLE).asDouble();
         double endAngle = node.get(END_ANGLE).asDouble();
-        return new Arc(center, radius, startAngle, endAngle);
+        String layer = "0";
+        if (node.has(LAYER)) {
+            layer = node.get(LAYER).asText();
+        }
+        return new Arc(center, radius, startAngle, endAngle, layer);
     }
 
     private Circle parseCircle(JsonNode node) {
         Point center = point(node.get(CENTER));
         double radius = node.get(RADIUS).asDouble();
-        return new Circle(center, radius);
+        String layer = "0";
+        if (node.has(LAYER)) {
+            layer = node.get(LAYER).asText();
+        }
+        return new Circle(center, radius, layer);
     }
 
     private Ellipse parseEllipse(JsonNode node) {
         Point center = point(node.get(CENTER));
         JsonNode majorAxis = node.get(MAJOR_AXIS);
         double ratio = node.get(RATIO).asDouble();
+        String layer = "0";
+        if (node.has(LAYER)) {
+            layer = node.get(LAYER).asText();
+        }
         return Ellipse.ellipse(
                 center,
                 majorAxis.get(0).asDouble(),
                 majorAxis.get(1).asDouble(),
-                ratio
+                ratio,
+                layer
         );
     }
 

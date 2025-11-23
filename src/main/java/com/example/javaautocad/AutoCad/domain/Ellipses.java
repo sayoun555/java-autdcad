@@ -12,6 +12,16 @@ public class Ellipses {
         this.ellipseList = new ArrayList<>(ellipseList);
     }
 
+    public Ellipses filter(LayerFilter filter) {
+        List<Ellipse> filtered = new ArrayList<>();
+        for (Ellipse ellipse : ellipseList) {
+            if (filter.matches(ellipse)) {
+                filtered.add(ellipse);
+            }
+        }
+        return new Ellipses(filtered);
+    }
+
     private double averageMajorRadius() {
         if (ellipseList.isEmpty()) {
             return 0.0;

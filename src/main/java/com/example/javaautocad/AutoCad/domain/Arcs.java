@@ -12,6 +12,17 @@ public class Arcs {
         this.arcs = new ArrayList<>(arcs);
     }
 
+    public Arcs filter(LayerFilter filter) {
+        List<Arc> filtered = new ArrayList<>();
+        for (Arc arc : arcs) {
+            if (filter.matches(arc)) {
+                filtered.add(arc);
+            }
+        }
+        return new Arcs(filtered);
+    }
+
+
     private double averageRadius() {
         if (arcs.isEmpty()) {
             return 0.0;

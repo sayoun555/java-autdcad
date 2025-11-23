@@ -7,7 +7,7 @@ import java.util.List;
 
 public class G1 {
     private final G1s g1s;
-    private final double THRESHOLD = 0.5;
+    private final double THRESHOLD = 10.0;
 
     public G1(G1s g1s) {
         this.g1s = g1s;

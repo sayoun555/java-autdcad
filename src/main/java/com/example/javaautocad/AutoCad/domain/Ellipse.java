@@ -5,19 +5,21 @@ public class Ellipse {
     private final double majorRadius;
     private final double minorRadius;
     private final double rotation;
+    private final String layer;
 
-    public Ellipse(Point center, double majorRadius, double minorRadius, double rotation) {
+    public Ellipse(Point center, double majorRadius, double minorRadius, double rotation, String layer) {
         this.center = center;
         this.majorRadius = majorRadius;
         this.minorRadius = minorRadius;
         this.rotation = rotation;
+        this.layer = layer;
     }
 
-    public static Ellipse ellipse(Point center, double majorX, double majorY, double ratio) {
+    public static Ellipse ellipse(Point center, double majorX, double majorY, double ratio, String layer) {
         double majorRadius = magnitude(majorX, majorY);
         double minorRadius = majorRadius * ratio;
         double rotation = Math.atan2(majorY, majorX);
-        return new Ellipse(center, majorRadius, minorRadius, rotation);
+        return new Ellipse(center, majorRadius, minorRadius, rotation, layer);
     }
 
     private static double magnitude(double x, double y) {
@@ -54,5 +56,9 @@ public class Ellipse {
 
     public double getRotation() {
         return rotation;
+    }
+
+    public String getLayer() {
+        return layer;
     }
 }

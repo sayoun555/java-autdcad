@@ -1,6 +1,7 @@
 package com.example.javaautocad.AutoCad.ai;
 
 import com.example.javaautocad.AutoCad.config.EnvConfig;
+import com.example.javaautocad.AutoCad.config.LayerConfig;
 import com.example.javaautocad.AutoCad.domain.*;
 import com.example.javaautocad.AutoCad.dto.*;
 import com.example.javaautocad.AutoCad.message.ErrorMessage;
@@ -27,6 +28,7 @@ public class AutoAi {
     public void tireType(String type) {
         this.userInput = type;
     }
+
     private String fileIo(Path path) {
         try {
             return Files.readString(path);
@@ -36,19 +38,27 @@ public class AutoAi {
     }
 
     private Lines lineParser(String fileResult) {
-        return new Lines(autoParser.lineParser(fileResult));
+        Lines allLines = new Lines(autoParser.lineParser(fileResult));
+        LayerFilter filter = new LayerFilter(LayerConfig.getTargetLayer());
+        return allLines.filter(filter);
     }
 
     private Arcs arcParser(String fileResult) {
-        return new Arcs(autoParser.arcParser(fileResult));
+        Arcs allArcs = new Arcs(autoParser.arcParser(fileResult));
+        LayerFilter filter = new LayerFilter(LayerConfig.getTargetLayer());
+        return allArcs.filter(filter);
     }
 
     private Circles circleParser(String fileResult) {
-        return new Circles(autoParser.circlesParser(fileResult));
+        Circles allCircles = new Circles(autoParser.circlesParser(fileResult));
+        LayerFilter filter = new LayerFilter(LayerConfig.getTargetLayer());
+        return allCircles.filter(filter);
     }
 
     private Ellipses ellipseParser(String fileResult) {
-        return new Ellipses(autoParser.ellipseParser(fileResult));
+        Ellipses allEllipses = new Ellipses(autoParser.ellipseParser(fileResult));
+        LayerFilter filter = new LayerFilter(LayerConfig.getTargetLayer());
+        return allEllipses.filter(filter);
     }
 
     private EntityStatistics entityParser(String fileResult) {
@@ -67,8 +77,8 @@ public class AutoAi {
         AiPrompt aiPrompt = new AiPrompt();
         Lines lines = lineParser(fileResult);
         Arcs arcs = arcParser(fileResult);
-        LineStatisticsDto lineStats = lineParser(fileResult).lineDelivery();
-        ArcStatisticsDto arcStats = arcParser(fileResult).aecDelivery();
+        LineStatisticsDto lineStats = lines.lineDelivery();
+        ArcStatisticsDto arcStats = arcs.aecDelivery();
         CircleStatisticsDto circleStats = circleParser(fileResult).ciseclsDelivery();
         EllipseStatisticsDto ellipseStats = ellipseParser(fileResult).ellipesDelivery();
         EntityCountStatisticsDto entityStats = entityParser(fileResult).entityDelivery();

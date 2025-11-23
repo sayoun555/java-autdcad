@@ -5,12 +5,14 @@ public class Arc {
     private final double radius;
     private final double startAngle;
     private final double endAngle;
+    private final String layer;
 
-    public Arc(Point point, double radius, double startAngle, double endAngle) {
+    public Arc(Point point, double radius, double startAngle, double endAngle, String layer) {
         this.point = point;
         this.radius = radius;
         this.startAngle = startAngle;
         this.endAngle = endAngle;
+        this.layer = layer;
     }
 
     public double arcLength() {
@@ -36,5 +38,25 @@ public class Arc {
 
     public double getEndAngle() {
         return endAngle;
+    }
+
+    public String getLayer() {
+        return layer;
+    }
+
+    public Point getStartPoint() {
+        double angle = Math.toRadians(startAngle);
+        return new Point(
+                point.getX() + radius * Math.cos(angle),
+                point.getY() + radius * Math.sin(angle)
+        );
+    }
+
+    public Point getEndPoint() {
+        double angle = Math.toRadians(endAngle);
+        return new Point(
+                point.getX() + radius * Math.cos(angle),
+                point.getY() + radius * Math.sin(angle)
+        );
     }
 }

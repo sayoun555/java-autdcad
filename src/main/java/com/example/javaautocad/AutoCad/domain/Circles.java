@@ -12,6 +12,16 @@ public class Circles {
         this.circles = new ArrayList<>(circles);
     }
 
+    public Circles filter(LayerFilter filter) {
+        List<Circle> filtered = new ArrayList<>();
+        for (Circle circle : circles) {
+            if (filter.matches(circle)) {
+                filtered.add(circle);
+            }
+        }
+        return new Circles(filtered);
+    }
+
     private double averageRadius() {
         if (circles.isEmpty()) {
             return 0.0;
