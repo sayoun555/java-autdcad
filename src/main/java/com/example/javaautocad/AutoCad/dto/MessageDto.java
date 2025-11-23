@@ -1,0 +1,19 @@
+package com.example.javaautocad.AutoCad.dto;
+
+public class MessageDto {
+    private final String role;
+    private final String content;
+
+    public MessageDto(String role, String content) {
+        this.role = role;
+        this.content = content;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public String getContent() {
+        return content;
+    }
+}
