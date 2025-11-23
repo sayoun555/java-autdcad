@@ -15,9 +15,9 @@ class JavaAutocadApplicationTests {
     @Test
     void lineStatistics_basicCalculation() {
         List<Line> lines = List.of(
-                new Line(new Point(0, 0), new Point(1, 0)),
-                new Line(new Point(0, 0), new Point(2, 0)),
-                new Line(new Point(0, 0), new Point(3, 0))
+                new Line(new Point(0, 0), new Point(1, 0), "test"),
+                new Line(new Point(0, 0), new Point(2, 0), "test"),
+                new Line(new Point(0, 0), new Point(3, 0), "test")
         );
         Lines linesDomain = new Lines(lines);
         LineStatisticsDto dto = linesDomain.lineDelivery();

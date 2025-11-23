@@ -43,20 +43,4 @@ public class Arc {
     public String getLayer() {
         return layer;
     }
-
-    public Point getStartPoint() {
-        double angle = Math.toRadians(startAngle);
-        return new Point(
-                point.getX() + radius * Math.cos(angle),
-                point.getY() + radius * Math.sin(angle)
-        );
-    }
-
-    public Point getEndPoint() {
-        double angle = Math.toRadians(endAngle);
-        return new Point(
-                point.getX() + radius * Math.cos(angle),
-                point.getY() + radius * Math.sin(angle)
-        );
-    }
 }

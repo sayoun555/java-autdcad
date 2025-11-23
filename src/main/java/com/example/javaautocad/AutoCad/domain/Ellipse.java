@@ -33,11 +33,6 @@ public class Ellipse {
         return Math.sqrt(1 - (minorRadius * minorRadius) / (majorRadius * majorRadius));
     }
 
-    public double circumference() {
-        double h = Math.pow(majorRadius - minorRadius, 2) / Math.pow(majorRadius + minorRadius, 2);
-        return Math.PI * (majorRadius + minorRadius) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)));
-    }
-
     public double averageCurvature() {
         return 2.0 / (majorRadius + minorRadius);
     }

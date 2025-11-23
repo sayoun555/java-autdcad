@@ -13,8 +13,4 @@ public class G1s {
     public List<Object> val() {
         return segment;
     }
-
-    public boolean empty() {
-        return segment.isEmpty();
-    }
 }

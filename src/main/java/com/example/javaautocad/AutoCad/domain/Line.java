@@ -26,8 +26,4 @@ public class Line {
     public String getLayer() {
         return layer;
     }
-
-    public boolean isLayer() {
-        return "도면층3".equals(layer);
-    }
 }

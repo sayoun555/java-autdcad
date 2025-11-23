@@ -31,8 +31,4 @@ public class Circle {
         return layer;
     }
 
-    public boolean isLayer() {
-        return "도면층3".equals(layer);
-    }
-
 }
