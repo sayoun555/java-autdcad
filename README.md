@@ -35,7 +35,7 @@ AutoCad
 │   └── AutoCadController          # 전체 흐름 제어
 ├── manager
 │   ├── FileWatcher                # 파일 감시 & 이벤트 처리
-│   └── DxfConverter               # Python DXF → JSON 변환
+│   └── DxfConverter               # Python 호출
 ├── ai
 │   ├── AutoAi                     # 분석 전체 orchestrator
 │   ├── AiClient                   # AI 호출
@@ -56,7 +56,8 @@ AutoCad
 │   ├── InputView                   # 사용자 입력
 │   ├── OutputView                  # 출력
 │   └── InputValidator              # 입력 검증
-└── config
-├── EnvConfig                   # .env 관리
-└── ControllerConfig            # DI 조립
+├── config
+│   ├── EnvConfig                   # .env 관리
+│   └── ControllerConfig            # DI 조립
+└── dxf_to_json.py                  # DXF -> JSON 변환
 ```
