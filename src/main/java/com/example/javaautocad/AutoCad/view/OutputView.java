@@ -7,8 +7,8 @@ public class OutputView {
     private final String PYTHON = "파이썬: ";
     private final String SCRIPT = "스크립트: ";
     private final String UPDATE = "설정 업데이트 완료";
-    private final String OUTPUT_PYTHON = "파이썬 파일 경로를 입력해주세요.";
-    private final String OUTPUT_SCRIPT = "DXF 스크립트 경로를 입력해주세요. ";
+    private final String OUTPUT_PYTHON = "파이썬 파일 경로를 입력해주세요. python 폴더 안에 있습니다. 예: python/python.exe";
+    private final String OUTPUT_SCRIPT = "DXF 스크립트 경로를 입력해주세요. python 폴더 안에 있습니다. 예: python/dxf_to_json.py";
     private final String CONFIG = "변경 하시겠습니까? (y/n)";
     private final String KEY = "open api key를 입력해주세요.";
     private final String REJOIN = "설정이 끝났습니다. 프로그램을 다시 켜주세요.";
