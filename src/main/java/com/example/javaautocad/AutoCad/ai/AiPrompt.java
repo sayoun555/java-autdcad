@@ -199,9 +199,7 @@ public class AiPrompt {
         sb.append("MaxCurvatureRate: ").append(curvatureStatisticsDto.getMaxCurvatureRate()).append(EMPTY);
         sb.append("AvgCurvatureRate: ").append(curvatureStatisticsDto.getAvgCurvatureRate()).append(EMPTY);
         sb.append(EMPTY);
-
         sb.append(EMPTY);
-
         return sb.toString();
     }
 }

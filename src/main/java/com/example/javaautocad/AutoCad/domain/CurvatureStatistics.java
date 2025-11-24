@@ -151,13 +151,13 @@ public class CurvatureStatistics {
         double[] jumpStats = curvatureJump(kappaList);
         double[] rateStats = curvatureRate(kappaList, lengthList);
         return new CurvatureStatisticsDto(
-                absStats[0],  // maxCurvature
-                absStats[1],  // minCurvature
-                absStats[2],  // avgCurvature
-                jumpStats[0], // maxJump
-                jumpStats[1], // avgJump
-                rateStats[0], // maxRate
-                rateStats[1]  // avgRate
+                absStats[0],
+                absStats[1],
+                absStats[2],
+                jumpStats[0],
+                jumpStats[1],
+                rateStats[0],
+                rateStats[1]
         );
     }
 }
