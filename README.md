@@ -27,7 +27,7 @@ LLM이 계산하는 지표들:
 ## 📦 Download
 
 - AutoCAD AI Design Assistant v1.0.0  
-- ➡️ **[Download ZIP (Release)](https://github.com/sanghyunyoun/java-autocad/releases/tag/v1.0.0)**
+- ➡️ **[Download ZIP (Release)](https://github.com/sayoun555/java-autdcad/releases/tag/v1.0.0)**
 
 
 ## 아키텍처
