@@ -3,6 +3,9 @@
 ## 개요
  오토바이 타이어 단면(프로파일) DXF 파일을 실시간으로 분석하고, 구조역학 기반 AI 피드백을 제공하는 CLI 애플리케이션입니다.
 
+## 시뮬레이션
+https://youtu.be/dZe2C4fhm-M
+
 ## AI 구조역학 해석
 OpenAI API를 통한 공학적 분석:
 LLM이 계산하는 지표들:
@@ -24,9 +27,7 @@ LLM이 계산하는 지표들:
 ## 📦 Download
 
 - AutoCAD AI Design Assistant v1.0.0  
-- ➡️ **[Download ZIP (Release)](https://github.com/sanghyunyoun/java-autocad/releases/tag/v1.0.0)**
-
-- 압축을 풀고 `.env`를 설정한 뒤 다음 명령으로 실행하세요:
+- ➡️ **[Download ZIP (Release)](https://github.com/sayoun555/java-autdcad/releases/tag/v1.0.0)**
 
 
 ## 아키텍처
