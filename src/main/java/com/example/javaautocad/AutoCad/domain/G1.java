@@ -17,8 +17,7 @@ public class G1 {
         List<Double> result = new ArrayList<>();
         List<Object> list = g1s.val();
 
-        for (int i = 0; i < list.size(); i++) {
-            Object obj = list.get(i);
+        for (Object obj : list) {
             if (obj instanceof Line line) {
                 result.add(angleLine(line));
             }

@@ -45,7 +45,8 @@ AutoCad
 ├── domain
 │   ├── Point / Line / Arc ...     # 도메인 모델
 │   ├── Lines / Arcs ...           # 일급 컬렉션
-│   └── G1 / G1s                   # G1 연속성 도메인
+│   ├── G1 / G1s                   # G1 연속성 도메인
+│   └── CurvatureStatistics        # 곡률 변화량 / 곡률변화율 도메인
 ├── dto
 │   ├── 통계 DTO들                 # LineStatisticsDto 등
 │   └── AiDto                       # OpenAI 요청 구조

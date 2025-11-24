@@ -73,6 +73,14 @@ public class AutoAi {
         return new G1(g1s);
     }
 
+    public CurvatureStatistics mixCurvature(Lines lines, Arcs arcs) {
+        List<Object> list = new ArrayList<>();
+        list.addAll(lines.getLineList());
+        list.addAll(arcs.getArcs());
+        G1s g1s = new G1s(list);
+        return new CurvatureStatistics(g1s);
+    }
+
     private String promptBuild(String fileResult) {
         AiPrompt aiPrompt = new AiPrompt();
         Lines lines = lineParser(fileResult);
@@ -83,6 +91,8 @@ public class AutoAi {
         EllipseStatisticsDto ellipseStats = ellipseParser(fileResult).ellipesDelivery();
         EntityCountStatisticsDto entityStats = entityParser(fileResult).entityDelivery();
         G1 g1 = mixG1(lines, arcs);
+        CurvatureStatistics curvatureStatistics = mixCurvature(lines, arcs);
+        CurvatureStatisticsDto curvatureStatisticsDto = curvatureStatistics.curvatureDelivery();
         return aiPrompt.aiPromptBuilder(
                 fileResult,
                 lineStats,
@@ -91,7 +101,9 @@ public class AutoAi {
                 arcStats,
                 ellipseStats,
                 userInput,
-                g1
+                g1,
+                curvatureStatisticsDto,
+                curvatureStatistics
         );
     }
 

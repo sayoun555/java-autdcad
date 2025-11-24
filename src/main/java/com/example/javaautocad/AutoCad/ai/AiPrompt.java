@@ -1,12 +1,8 @@
 package com.example.javaautocad.AutoCad.ai;
 
+import com.example.javaautocad.AutoCad.domain.CurvatureStatistics;
 import com.example.javaautocad.AutoCad.domain.G1;
-import com.example.javaautocad.AutoCad.dto.ArcStatisticsDto;
-import com.example.javaautocad.AutoCad.dto.CircleStatisticsDto;
-import com.example.javaautocad.AutoCad.dto.EllipseStatisticsDto;
-import com.example.javaautocad.AutoCad.dto.EntityCountStatisticsDto;
-import com.example.javaautocad.AutoCad.dto.G1Dto;
-import com.example.javaautocad.AutoCad.dto.LineStatisticsDto;
+import com.example.javaautocad.AutoCad.dto.*;
 
 public class AiPrompt {
 
@@ -34,6 +30,7 @@ public class AiPrompt {
             3. Output language
             - The final answer must be written entirely in Korean.
             - Section titles, explanations, and summary must all be Korean.
+
             """;
 
     private final String TASK = """
@@ -142,9 +139,10 @@ public class AiPrompt {
             ArcStatisticsDto arcStatisticsDto,
             EllipseStatisticsDto ellipseStatisticsDto,
             String userInput,
-            G1 g1
+            G1 g1,
+            CurvatureStatisticsDto curvatureStatisticsDto,
+            CurvatureStatistics curvatureStatistics
     ) {
-
         G1Dto g1Dto = g1.g1Delivery();
         StringBuilder sb = new StringBuilder();
         sb.append(MAIN).append(EMPTY);
@@ -192,6 +190,16 @@ public class AiPrompt {
         sb.append("MaxJump: ").append(g1Dto.getMaxJump()).append(EMPTY);
         sb.append("AvgJump: ").append(g1Dto.getArgJump()).append(EMPTY);
         sb.append("BreakCount: ").append(g1Dto.getBreakCount()).append(EMPTY);
+        sb.append("[CURVATURE STATISTICS]").append(EMPTY);
+        sb.append("MaxCurvature: ").append(curvatureStatisticsDto.getMaxCurvature()).append(EMPTY);
+        sb.append("MinCurvature: ").append(curvatureStatisticsDto.getMinCurvature()).append(EMPTY);
+        sb.append("AvgCurvature: ").append(curvatureStatisticsDto.getAvgCurvature()).append(EMPTY);
+        sb.append("MaxCurvatureJump: ").append(curvatureStatisticsDto.getMaxCurvatureJump()).append(EMPTY);
+        sb.append("AvgCurvatureJump: ").append(curvatureStatisticsDto.getAvgCurvatureJump()).append(EMPTY);
+        sb.append("MaxCurvatureRate: ").append(curvatureStatisticsDto.getMaxCurvatureRate()).append(EMPTY);
+        sb.append("AvgCurvatureRate: ").append(curvatureStatisticsDto.getAvgCurvatureRate()).append(EMPTY);
+        sb.append(EMPTY);
+
         sb.append(EMPTY);
 
         return sb.toString();
