@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### Environment ###
-.env
+src/main/resources/.env
 
 .DS_Store
 Thumbs.db

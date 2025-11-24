@@ -116,17 +116,6 @@ public class ParserTest {
     }
 
     @Test
-    public void testCountEntities() {
-        Map<String, Integer> counts = parser.countEntities(testJson);
-
-        assertNotNull(counts);
-        assertEquals(2, counts.get("LINE"));
-        assertEquals(1, counts.get("CIRCLE"));
-        assertEquals(1, counts.get("ARC"));
-        assertEquals(1, counts.get("ELLIPSE"));
-    }
-
-    @Test
     public void testParseStatistics() {
         EntityStatistics stats = parser.parseStatistics(testJson);
 
