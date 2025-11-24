@@ -20,7 +20,15 @@ LLM이 계산하는 지표들:
 - Gradle: 빌드 도구
 - Jackson: JSON 파싱
 - ezdxf: Python DXF 라이브러리
-- 
+
+## 📦 Download
+
+- AutoCAD AI Design Assistant v1.0.0  
+- ➡️ **[Download ZIP (Release)](https://github.com/sanghyunyoun/java-autocad/releases/tag/v1.0.0)**
+
+- 압축을 풀고 `.env`를 설정한 뒤 다음 명령으로 실행하세요:
+
+
 ## 아키텍처
 
 ```
