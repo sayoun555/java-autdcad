@@ -22,6 +22,8 @@ LLM이 계산하는 지표들:
 - ezdxf: Python DXF 라이브러리
 - 
 ## 아키텍처
+
+```
 Controller (AutoCadController)
 ↓
 Service (AutoMeasureService)
@@ -34,6 +36,8 @@ Domain (Line, Arc, Circle, Ellipse)
 Statistics (G1, Curvature, Entity)
 ↓
 AI Prompt Builder
+
+```
 
 ## 배포
 - Windows 환경을 위한 독립 실행형 패키지로 배포했습니다. 사용자가 Java나 Python을 별도로 설치할 필요가 없도록 모든 런타임을 임베드했습니다.
